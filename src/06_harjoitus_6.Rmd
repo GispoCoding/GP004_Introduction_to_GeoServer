@@ -1,188 +1,241 @@
-# HARJOITUS 1.6: RASTERIAINEISTOT
+---
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
 
-**Harjoituksen sisältö**
+# EXERCISE 1.6: RASTER DATA
 
-Harjoituksessa lisätään rasteriaineistoja GeoServer-palvelimelle ja muokataan tason asetuksia WCS-palvelun julkistamista varten.
+**Content of the exercise**
 
-**Harjoituksen tavoite**
+The exercise involves adding raster data to the GeoServer server and modifying layer settings for publishing to the WCS service.
 
-Harjoituksen jälkeen opiskelija osaa lisätä rasteriaineistoja ja tehdä välttämättömät asetukset aineiston julkaisemiseksi.
+**Aim of the exercise**
 
-**Arvioitu kesto**
+After the exercise, the student will be able to add raster data and make the necessary settings to publish the data.
 
-40 minuuttia.
+**Estimated duration**
 
-## **Valmistautuminen**
+40 minutes.
 
-Aiemmissa harjoituksissa on luotu **helsinki**-workspace, joihin on määritelty muun muassa vesileima näkyväksi.
+## **Preparation**
 
-GeoServerin palvelimen aineistohakemistoon on valmiiksi ladattu muutama rasteriaineisto: yksi korkeusmalli ja neljä ilmakuvaa Helsingin alueelta.
+In previous exercises, **helsinki** workspace has been created, where, among other things, a watermark has been defined to be visible.
 
-## **Rasteriaineiston lisääminen**
+A few raster files have been uploaded to the data directory of the GeoServer server: one elevation model and four aerial photographs of the Helsinki area.
 
-Rasteriaineiston lisääminen GeoServeriin tapahtuu melko samalla tavalla kun aiemmissa harjoituksissa vektoriaineistojen kanssa. Ladataan nyt GeoServeriin käytettäväksi rasteriaineisto, jonka alkuperäinen formaatti on **ArcGrid** (ASCII-pohjainen rasteriformaatti). Rasteriaineisto on Maanmittauslaitoksen korkeusmalli Helsingin alueelta (ruutukoolla 2 m x 2 m).
+## **Adding raster data**
 
-Ensin meidän pitää luoda viitereferenssi aineistoon, jotta GeoServer tietäisi, missä aineisto sijaitsee fyysisesti. Muista, että tämä tapahtuu luomalla storeja.
+Adding raster data to GeoServer is done in much the same way as in the previous exercises with vector data.
+We now load a raster file into GeoServer for use, the original format of which is **ArcGrid** (ASCII-based raster format).
+The raster data is a height model of the Helsinki area from National Land Survey of Finland (grid size 2 m x 2 m).
 
-Luo uusi store valitsemalla **Stores → Add new Store**. Paina sitten **ArcGrid** storen formaatiksi.
+First, we need to create a reference to the data so that GeoServer knows where the data is physically located.
+Remember that this is done by creating stores.
 
-Valitse taas **helsinki**-workspace ja nimeä uusi store: **hki_korkeusmalli_L4133A**.
+Create a new store by selecting **Stores → Add new Store**.
+Then click **ArcGrid** for the store format.
 
-Selaa sitten kansioon **/koulutus/korkeusmalli_2m/** ja valitse tiedosto **L4133A.asc**.\
-![](img/harjoitus_6/image1.png)
+Select **helsinki**-workspace again and name the new store: **hki_elevation_model_L4133A**.
 
-Paina sitten **Save** ja sen jälkeen **Publish**.
+Then browse to the folder **/training/elevation_model_2m/** and select the file **L4133A.asc**..
 
-Kuten aiemmin vektoriaineistojen luomisen yhteydessä, pääset nyt tason editointinäkymään. Tarkista yleisasetukset niin, että sekä **Enabled** että **Advertised** ovat valittuna.
+![](img/harjoitus_6/image1.2.png)
 
-Laita nimeksi **korkeusmalli** ja otsikoksi **Helsingin korkeusmalli** ja lisätiedoksi **Korkeusmalli 2m -- Maanmittauslaitos.**
-![](img/harjoitus_6/image2.png)
+Then press **Save** and after that press **Publish**.
 
-Huomaa, että **Coordinate Reference Systems** -kohdassa, koordinaattijärjestelmä on määritelty väärin. Aineiston oikea järjestelmä on **ETRS89 / ETRS-TM35FIN** (**EPSG:3067**). Korjaa sitä käsin **Declared SRS** -kentässä ja valitse **SRS handling** kentästä **Force declared**. Käytä sen jälkeen pikalinkkejä määrittääksesi aineiston laajuuden.
+As before when creating vector files, you can now access the layer editing view.
+Check the general settings so that both **Enabled** and **Advertised** are checked.
+
+Set the name to **elevation model** and the title to **Helsinki elevation model** and the additional information to **Elevation model 2m -- National Land Survey of Finland.**
+
+![](img/harjoitus_6/image2.2.png)
+
+Note that in **Coordinate Reference Systems**, the coordinate system is incorrectly defined.
+The correct system for the data is **ETRS89 / ETRS-TM35FIN** (**EPSG:3067**).
+Correct it manually in the **Declared SRS** field and select **SRS handling** in the **Force declared** field, then use the shortcuts to determine the extent of the data.
 ![](img/harjoitus_6/image3.png)
 
-Paina sitten **Save.**
+Then press **Save.**
 
-Tarkista, että taso on **Data → Layers**-taulussa. Voit esikatsella uutta rasteritasoa **Data → Layer Preview** -ikkunan kautta.\
+Check that the layer is in the **Data → Layers** table.
+You can preview the new raster layer via the **Data → Layer Preview** window.\
 ![](img/harjoitus_6/image4.png)
 
-## **Ilmakuvan lisääminen**
+## **Adding an aerial image**
 
-Samalla tavalla kun lisäsit edellisessä kohdassa ArcGrid-tiedoston voit lisätä GeoTIFF-aineistoja. 
+In the same way as you added an ArcGrid file in the previous step, you can add GeoTIFF data.
 
-Seuraa edellisen kohdan ohjeita ja lisää samalta alueelta ilmakuva. GeoTIFF-tiedosto löytyy täältä: **/koulutus/ilmakuvat_geotiff/L4133A.tif**.
+Follow the instructions in the previous section and add an aerial image of the same area.
+The GeoTIFF file can be found here: **/training/aerialimage_geotiff/L4133A.tif**.
 
-Nimeä seuraavasti: \
-	store:	**hki_ilmakuva\
-** taso:	**ilmakuva**
+Name as follows:\
+store: **hki_aerialimage\
+** layer: **aerialimage**
 
-Ilmakuva esikatselussa:
-![](img/harjoitus_6/image5.png)
+Aerial image in preview: ![](img/harjoitus_6/image5.png)
 
 ## **Image Mosaic**
 
-GeoServerin avulla voi julkaista useita rasteriaineistoja (esim. GeoTIFF-tiedostoja) yhtenä WMS-palveluna käyttämällä **Image mosaic** -formaattia.
+GeoServer allows you to publish multiple raster data (e.g. GeoTIFF files) as a single WMS service using the **Image mosaic** format.
 
-Mosaiikin muodostaminen vaatii, että kaikki aineistot ovat samassa kansiossa ja tiedostoformaatissa sekä samassa koordinaattijärjestelmässä. Rasteriformaatti tulee olla tuettuna GeoServerissä, esim. GeoTIFF tai ArcGrid.
+To create a mosaic, all data must be in the same folder, in the same file format and in the same coordinate system.
+The raster format must be supported by GeoServer, e.g.
+GeoTIFF or ArcGrid.
 
-Tämä storen tyyppi on tarkoitettu käytettäväksi samantyyppisten rasteriaineistojen kanssa. Esimerkiksi useita ilmakuvia, jotka muodostavat mosaiikin suositellaan julkaistavaksi kyseisellä tavalla välttäen tasokohtaista julkaisemista.
+This type of store is intended for use with the same type of raster data.
+For example, multiple aerial images that form a mosaic are recommended to be published in this way, avoiding layer-by-layer publication.
 
-Edellisen ilmakuvan kansiossa on muutamia ilmakuvia Helsingistä. Aineisto on ladattu Maanmittauslaitoksen aineistopalvelusta. Ne ovat **GeoTIFF-**formaatissa ja **TM35FIN**-**koordinaattijärjestelmässä** (**EPSG:3067**). Kuten nähdään kyseinen aineisto täyttää kaikki mosaiikin muodostamiseen vaatimukset.
+The previous aerial image folder contains some aerial images of Helsinki.
+The data has been downloaded from the data service of the National Land Survey of Finland.
+They are in **GeoTIFF** format and in the **TM35FIN** coordinate system\*\* (**EPSG:3067**).
+As can be seen, this data set meets all the requirements for mosaicking.
 
-Luo uusi store **helsinki** workspaceen. Valitse formaatiksi **ImageMosaic - Image mosaicking plugin**.
+Create a new store in **helsinki** workspace.
+Select **ImageMosaic - Image mosaicking plugin** as the format.
 
-Selaa kansioon **/koulutus/ilmakuvat_geotiff/** ja paina **OK**. Täten, kaikki kuvat kansiossa yhdistetään yhteen ja mosaiikkia käsitellään sen jälkeen yhtenä tasona.
+Browse to the folder **/training/images_geotiff/** and press **OK**.
+This way, all images in the folder will be merged together and the mosaic will then be treated as a single layer.
 
-Anna nimi ja selitys esimerkiksi seuraavan kuvan mukaisella tavalla:
-![](img/harjoitus_6/image6.png)
+Enter a name and an explanation, for example as shown in the following picture: (päivitä kuva)
 
-Paina sitten **Save** ja sen jälkeen julkista taso painamalla **Publish**.
+![](img/harjoitus_6/image6.2.png)
 
-Laita tason nimeksi **ilmakuvat_keskusta** ja otsikoksi **Helsingin keskustan ilmakuvat**. Lisätiedoksi voit kirjoittaa esimerkiksi **Helsingin ilmakuvat - Maanmittauslaitos 2014**. Tarkista tason editointinäkymästä, että **Enabled** ja **Advertised** ovat rastitettuna.
-![](img/harjoitus_6/image7.png)
+Then press **Save** and then press **Publish** to publish the layer.
 
-Huomaa, että GeoTIFF-tiedoston koordinaattijärjestelmän tiedot (EPSG:3067) ja aineiston laajuus on tässä määrittynyt oikein automaattisesti (oletusarvojen mukaisesti).
+Name the layer **Aerialimages_ofthecitycentre** and title it **Aerial images of the city centre of Helsinki**.
+For additional information you can write for example **Aerial images of Helsinki - National Land Survey of Finland 2014**.
+Check in the edit view of the layer that **Enabled** and **Advertised** are checked.
+![](img/harjoitus_6/image7.2.png)
+
+Please note that the coordinate system data (EPSG:3067) and the extent of the data in the GeoTIFF file are correctly defined here automatically (according to the default values).
 ![](img/harjoitus_6/image8.png)
 
 ::: hint-box
-Psst! Kuten aiemmin mainittiin, GeoServer pyrkii tulkitsemaan alkuperäisen aineiston koordinaattijärjestelmän alkuperäisistä tiedoista, joka tässä tapauksessa oli EPSG-muodossa.
+Psst!
+As mentioned before, GeoServer tries to interpret the original coordinate system of the data from the original information, which in this case was in EPSG format.
 :::
 
-Paina lopuksi **Save**.
+Then press **Save**.
 
-Tarkista, että uusi taso löytyy **Data → Layers** -näkymältä. Voit myös esikatsella sitä tuttuun tapaan käyttäen **Data → Layers Preview**.
+Check that the new layer can be found in **Data → Layers** view.
+You can also preview it in the usual way using **Data → Layers Preview**.
 ![](img/harjoitus_6/image9.png)
 
 ## **Layer Groups**
 
-GeoServerin tasoja ja/tai aiemmin luotuja tasoryhmiä voidaan ryhmittää. Tasoryhmissä voi yhdistää eri vektori- ja rasteriformaatteja. Yksi selkeä käyttötapaus on taustakartan julkaiseminen yhtenä WMS-tasopalveluna. 
+GeoServer layers and/or previously created layer groups can be grouped.
+Layer groups can combine different vector and raster formats.
+One obvious use case is the publication of a background map as a single WMS layer service.
 
-Luodaan nyt tasoryhmä käyttäen aiemmin palvelimelle lisättyjä **ilmakuvat_keskusta-**, **rakennukset-** ja **tiesto**-tasoja.
+Now create a layer group using the **aerialimages**, **buildings-** and **roadworks** layers previously added to the server.
 
-Valitse päävalikosta **Data → Layer Groups** ja sitten **Add new layer group**.
+From the main menu, select **Data → Layer Groups** and then **Add new layer group**.
 
-Laita ryhmätason nimeksi **taustakartta** ja otsikoksi **Helsingin taustakartta**. Lisää **Abstract** kentälle \"Helsingin keskustan taustakartta\".
+Name the group layer **Background map** and title it **Helsinki background map**.
+Add "Helsinki city centre background map" to the **Abstract** field.
 
 ::: hint-box
-Psst! Joissain selaimissa ääkkösten käyttö ei välttämättä onnistu. Vältä ääkkösten käyttöä tasojen nimissä ja otsikoissa.
+Psst!
+Some browsers may not allow the use of ä or ö.
+Avoid using these alphabets in layer names and titles.
 :::
 
-Valitse **helsinki** workspace:ksi.
+Select **helsinki** as workspace.
 
-Selaa sivua alaspäin, paina **Add Layer...** ja lisää **ilmakuvat_keskusta**-taso. Taso on nyt lisätty **Layers**-listalle.
+Scroll down the page, press **Add Layer...** and add the **Aerialimages_ofthecitycentre** layer.
+The layer is now added to the **Layers** list.
 
-Paina **Generate Bounds** ja huomaa, kuinka tason alkuperäinen koordinaatistojärjestelmä ja laajuus on nyt määritettynä niille kuuluvissa kentissä. Pidetään ryhmätason järjestelmänä **ETRS89 / TM35FIN**.
-![](img/harjoitus_6/image10.png)
+Press **Generate Bounds** and notice how the layer's original coordinate system and extent are now defined in their respective fields.
+Let's keep the group layer coordinate system as **ETRS89 / TM35FIN**.
+![](img/harjoitus_6/image10.2.png)
 
-Lisää samalla tavalla Helsingin **rakennukset**- ja **tiesto**-tasot.
+In the same way, add the Helsinki **buildings** and **road** layers.
 
-Huomaa, että voit järjestää tasot käyttämällä **Drawing order** -nuolia. Ylempänä oleva (sija 1) piirretään ensimmäiseksi; sen päälle piirretään seuraava taso, ja niin edelleen. Järjestele tasot tämän kuvan mukaan:
+Note that you can arrange the layers using the **Drawing order** arrows.
+The top layer (layer 1) is drawn first; the next layer is drawn on top of it, and so on.
+Arrange the layers according to this picture below:
 
-Varmista, että **Default Style** ovat rastittuina.
+Make sure **Default Style** are checked.
 
-Paina lopulta uudelleen **Generate Bounds** päivittämään ryhmätason laajuustiedot, jotta myös uudet aineistot otetaan huomioon laajuustietojen määrittämisessä. Aina kun lisäät uutta aineistoa tasoryhmään tulisi painaa uudelleen **Generate Bounds** päivittääksesi ryhmätason laajuustiedot.
+Finally, press **Generate Bounds** again to update the group layer scope data, so that new data are also taken into account when determining the scope data.
+Whenever you add new material to a layer group, you should press **Generate Bounds** again to update the group layer scopes.
 
-Paina vielä **Save**.
+Press **Save** again.
 
-Voit esikatsella ryhmätasoa samalla tavalla kuin muitakin tasoja:
-![](img/harjoitus_6/image11.png)
-![](img/harjoitus_6/image12.png)
+You can preview the group layer in the same way as other levels: ![](img/harjoitus_6/image11.2.png)
+![](img/harjoitus_6/image12.2.png)
 
-### **Ryhmätasojen julkaisemisen muoto**
+### **Form of publication of group layers**
 
-Palaa ryhmätason asetuksiin (**Data → Layer Groups → taustakartta**). Selaa alaspäin **Mode**-kohdalle asti. Tässä kohdassa voit valita erilaisia muotoja ryhmätason tasoille:
+Return to the group layer settings (**Data → Layer Groups → background map**).
+Scroll down to **Mode**.
+Here you can select different formats for the group layers:
 
--   **Single**-ryhmätaso on nähtävissä yhtenä tasona, lähtötasoja ei voi erotella toisistaan
+-   **Single** group layer is visible as a single layer, output layers cannot be separated from each other
 
--   **Named Tree** -ryhmätaso on nähtävissä ryhmänä ja yksittäisinä tasoina
+-   The **Named Tree** group layer can be viewed as a group and as individual layers.
 
--   **Container Tree** -ryhmätaso on nähtävissä ainoastaan yksittäisinä tasoina
+-   **Container Tree** group layer is only visible as individual layers
 
--   **Earth Observation Tree** -ryhmätaso on tarkoitettu Earth Observation -aineistoa varten ja se on nähtävissä vain ryhmätason esikatselunäkymässä
+-   **Earth Observation Tree** is a group layer for Earth Observation data and is only visible in the group layer preview view
 
-Pidä oletus **Single** valittuna. Se asettaa WMS-tasot näkyville yhtenä tasona.
+Keep the default **Single** checked.
+It will make the WMS layers visible as a single layer.
 
-Pidä loput asetukset oletuksina ja paina lopuksi **Save**. Ryhmätasoja voidaan esikatsella samalla tavalla kuin muita tasoja. Mene **Layer Preview** -näkymään ja avaa uuden ryhmätason esikatselutila OpenLayers-linkin avulla. Huomaa, että oletuskuvaustekniikka on käytössä. Tämän ryhmätason kuvaustekniikkaa parannetaan vielä myöhemmin.
+Keep the rest of the settings as default and finally press **Save**.
+Group layers can be previewed in the same way as other layers.
+Go to **Layer Preview** and open a new group layer preview using the OpenLayers link.
+Note that the default styling technique is enabled.
+The stlyling technique for this group layer will be improved later.
 
-Kun olet saanut ryhmätason valmiiksi, voit palata ryhmätason asetuksiin ja kokeilla muita **Mode**-asetuksia. Seuraavat esimerkkikuvat ovat QGISin WMS-palvelun työkalusta. .
+Once you have completed the group layer, you can return to the group layer settings and try other **Mode** settings.
+The following sample images are from the QGIS WMS service tool.
 
-**Mode → Single** näyttää tältä:
-![](img/harjoitus_6/image13.png)
+**Mode → Single** looks like this:![](img/harjoitus_6/image13.2.png)
 
-Tässä muodossa koko ryhmätaso on aina ladattavissa yhtenä pakettina, eikä sen alitasoista ole saatavilla tietoa erikseen tai niitä voida ladata erikseen.
+In this format, the entire group layer is always downloadable as a single package, and no information is available or downloadable separately for its sub-layers.
 
-Kun taas **Mode →  Named Tree** näyttää tältä:
-![](img/harjoitus_6/image14.png)
+Whereas **Mode → Named Tree** looks like this: ![](img/harjoitus_6/image14.2.png)
 
-Tässä muodossa on mahdollista ladata tasoja yksitellen.
+In this format, it is possible to download layers one by one.
 
-### **Muiden WMS-palvelujen hyödyntäminen (cascading WMS)**
+### **Use of external WMS services (cascading WMS)**
 
-Rasteriaineisto voi olla peräisin myös muista WMS-palveluista. Tätä kutsutaan englanniksi **cascading-**tyyppiseksi ratkaisuksi. Käytännössä voidaan ketjuttaa WMS-tasoja toisista palveluista siten, että loppukäyttäjä ei huomaa eroa. Ketjuttaminen mahdollistaa esimerkiksi muiden paikkatietopalvelujen käytön GeoServeristämme. Heikkona puolena on se, että pitkistä ketjutuksista voi syntyä tilanne, jossa palvelun käytettävyys (vasteaika ja saatavuus) huononee oleellisesti.
+The raster data may also be derived from external WMS services.
+This is called a **cascading-** type solution.
+In practice, WMS layers from other services can be cascaded so that the end user does not notice the difference.
+For example, cascading allows the use of other spatial data services from our GeoServer.
+The drawback is that long cascading can lead to a situation where the availability (response time and availability) of the service is substantially reduced.
 
-Lisää uusi store (**Data → Stores → Add new Store**), valitse **WMS**-listalta.
+Add a new store (**Data → Stores → Add new Store**), select **WMS** from the list.
 ![](img/harjoitus_6/image15.png)
 
-Lisätään Helsingin kaupungin avoimet paikkatietopalvelut GeoServeriimme uudeksi WMS-yhteydeksi (remote WMS connection). Kyseinen Helsingin kaupungin palvelu löytyy osoitteesta: 
+Add the City of Helsinki's open spatial data services to our GeoServer as a new WMS connection (remote WMS connection).
+This City of Helsinki service can be found at: 
 
 ::: note-box
  [**https://kartta.hel.fi/ws/geoserver/avoindata/wms?REQUEST=Getcapabilities**](https://kartta.hel.fi/ws/geoserver/avoindata/wms?REQUEST=Getcapabilities).
 :::
 
-Täytä tiedot seuraavan kuvan mukaisesti, laita yllä oleva osoite **Capabilities URL** -kenttään:
-![](img/harjoitus_6/image16.png)
+Fill in the information as shown in the following image, put the above address in the **Capabilities URL** field:
 
-Loput asetukset voit jättää oletuksiin. Paina sitten **Save**.
+![](img/harjoitus_6/image16.2.png)
 
-Seuraavasti voit julkaista tasoja suoraan siitä palvelusta. Julkaise esimerkiksi **Ajantasa_asemakaava**.
+The rest of the settings can be left as defaults.
+Then press **Save**.
+
+Next, you can publish layers directly from that service.
+For example, publish **Ajantasa_asemakaava**.
 ![](img/harjoitus_6/image17.png)
 
-Uuden tason oletusasetukset ovat oikein. Selaa sivun loppuun ja paina **Save**.
+The default settings for the new layer are correct.
+Scroll to the bottom of the page and press **Save**.
 
-Voit nyt esikatsella uutta tasoa samalla tavalla kuin aiemmin:
-![](img/harjoitus_6/image18.png)
+You can now preview the new layer in the same way as before: ![](img/harjoitus_6/image18.png)
 
 ::: hint-box
-Psst! Huomaa, että WMS-cascade-tasojen tyyliin tai sisältöön ei voida vaikuttaa, sillä ne ovat Helsingin kaupungin omassa palvelimessa. 
-Helsingin kaupungin paikkatietopalvelujen metatietoihin voit tutustua tässä: http://ptp.hel.fi/avoindata/aineistot/Aineistolista_wms_avoindata_ulkoverkko.html.
+Psst!
+Please note that the style or content of the WMS cascade levels cannot be influenced, as they are hosted by the City of Helsinki in their own server.
+For metadata on the City of Helsinki spatial data services, please click here: <http://ptp.hel.fi/avoindata/aineistot/Aineistolista_wms_avoindata_ulkoverkko.html>.
 :::

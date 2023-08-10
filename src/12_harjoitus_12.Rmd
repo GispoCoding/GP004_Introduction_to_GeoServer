@@ -1,241 +1,222 @@
-# HARJOITUS 2.5: PÄÄSYNHALLINTA
+# EXERCISE 2.5: ACCESS CONTROL
 
-**Harjoituksen sisältö**
+**Content of the exercise**
 
-Harjoituksessa tutustutaan erilaisiin turvallisuusasetuksiin ja luodaan käyttäjiä ja rooleja. Asetetaan käyttöoikeuksia palveluille, aineistoille ja käyttäjille.
+The exercise will introduce you to different security settings and create users and roles. Set permissions for services, datas and users.
 
-**Harjoituksen tavoite**
+**Aim of the exercise**
 
-Harjoituksen jälkeen opiskelija osaa asettaa palvelimen perusasetuksia, luoda käyttäjiä ja rooleja. Opiskelija osaa myös asettaa käyttöoikeuksia palveluille ja aineistoille.
+After the exercise, the student will be able to set up basic server settings, create users and roles. The student will also be able to set permissions for services and data.
 
-**Arvioitu kesto**
+**Estimated duration**
 
-40 minuuttia.
+40 minutes.
 
-## **GeoServerin yleiset turvallisuusasetukset**
+## **GeoServer general security settings**
 
-Avaa **Security → Settings**. Tässä näkymässä voit määritellä yleisesti käytössä olevia turvallisuusasetuksia.
+Open **Security → Settings** This view allows you to configure commonly used security settings.
 
-![](img/harjoitus_12/image1.png)
+![](img/harjoitus_12/image1.2.png)
 
-Tässä näkymässä voidaan myös määrittää, mikä **Active role service** (roolipalvelu) on käytössä. GeoServer sallii valittavaksi vain yhden roolipalvelumuodon palvelimelle. Roolipalvelu  sisältää kaikki palvelimen käyttäjä-, ryhmä- ja roolisäännöt. Pidetään **default-**roolipalvelu käytössä.
+In this view, you can also specify which **Active role service** is enabled. GeoServer allows only one role service type to be selected for a server. The role service contains all user, group and role rules for the server. Keep **default** role service enabled.
 
-**Encryption**-kohdan alta löytyy salaukseen liittyviä asetuksia. **Encrypt web admin URL parameter** -valinta salaa käyttäjäliittymän URL-parametreja selaimella.
+Under **Encryption** you will find settings related to encryption. The **Encrypt web admin URL parameter** option encrypts the URL parameters of the user interface in the browser.
 
-Esimerkiksi, **Security**-valikon selaimen URL (missä nyt ollaan)... 
+For example, the URL of the browser in the **Security** menu (where we are now)...
 
-... ilman salausta on:
-
-::: note-box
-<http://localhost:8080/geoserver/web/?wicket:bookmarkablePage=:org.geoserver.security.web.SecuritySettingsPage>
-:::
-
-... salauksen kanssa se on:
+... without encryption is:
 
 ::: note-box
-<http://localhost:8080/geoserver/web/?x=xAiOmyK-CQmBXDhILZrWpny28bhFcImLrBRYk0INwrBDmbzQlmeLRdiaRoNSaBSx3o6elVC9JMPcy5gkRljLXMKGrvMx3Yui3*ANGkUW-hE>
+[http://[your-training-instance]/geoserver/web/?wicket:bookmarkablePage=:org.geoserver.security.web.SecuritySettingsPage](http://localhost:8080/geoserver/web/?wicket:bookmarkablePage=:org.geoserver.security.web.SecuritySettingsPage){.uri}
 :::
 
-Huomaa, että palvelimessa ei ole asennettu Java policy -tiedostoja, joten vahvaa salausta ei voida ottaa käyttöön.
+... with encryption it is:
+
+::: note-box
+[http://[your-training-instance]/geoserver/web/?x=xAiOmyK-CQmBXDhILZrWpny28bhFcImLrBRYk0INwrBDmbzQlmeLRdiaRoNSaBSx3o6elVC9JMPcy5gkRljLXMKGrvMx3Yui3\*ANGkUW-hE](http://localhost:8080/geoserver/web/?x=xAiOmyK-CQmBXDhILZrWpny28bhFcImLrBRYk0INwrBDmbzQlmeLRdiaRoNSaBSx3o6elVC9JMPcy5gkRljLXMKGrvMx3Yui3*ANGkUW-hE){.uri}
+:::
 
 ::: hint-box
-Psst! Java policy -tiedostojen asennus riippuu siitä, mikä Java ohjelmisto on palvelimessa asennettu. Jos asennettu on Open JDK, niin policy-tiedostot on oletuksena asennettu ja Strong cryptography käytössä. Jos taas asennetaan Oracle Java (joka on aikaisemmin ollut GeoServerin suositus) niin täytyy ladata Oraclen JCE policy jars ja purkaa ne JRE_HOME/lib/security -kansioon, jonka jälkeen Strong cryptography on käytössä.
+Psst! The installation of Java policy files depends on the Java Software installed on your server. If Open JDK is installed, then the policy files are installed by default and Strong cryptography is enabled. If, on the other hand, Oracle Java is installed (which has been GeoServer's recommendation in the past) then you need to download Oracle's JCE policy jars and extract them to the JRE_HOME/lib/security folder, after which Strong cryptography is enabled.
 :::
 
-**Password encryption** määrittää, mikä salauksen tyyli on käytössä salasanojen varastossa: **Plain text**, **Weak PBE** ja **Strong PBE**.
+**Password encryption** specifies which encryption style is used for password storage: **Plain text**, **Weak PBE** and **Strong PBE**.
 
-Pidä **Weak PBE** ja paina **Save**.
+Hold **Weak PBE** and press **Save**.
 
-## **Tunnistautuminen**
+## **Identification**
 
-**Authentication**-asetusten (tunnistautuminen) kautta määritellään, miten GeoServer kerää käyttäjätunnuksia ja verifioi niitä.
+The **Authentication** settings define how GeoServer collects and verifies user IDs.
 
-Oletuksena GeoServerin asetukset sallivat palvelimen käytön (eli WMS-, WFS- ja WCS-palvelujen käytön) ilman mitään käyttäjätunnusta. Voit tarkistaa tämän seuraavasti.
+By default, GeoServer settings allow access to the server (i.e. WMS, WFS and WCS services) without any user ID. You can check this as follows.
 
-Esikatsele tasoa **ilmakuvat_keskusta** samalla tavalla kuin aiemmin muita tasoja. Taso aukeaa selaimella ongelmitta, koska olet kirjautunut **admin**-tunnuksella.  Älä sulje esikatselusivua vielä.
+Preview the layer **aerialimages_ofthecitycentre** in the same way as you previewed the other layers before. The level will open in your browser without any problems because you are logged in with **admin**. Do not close the preview page yet.
 
-Mene nyt takaisin GeoServerin ylläpitosivulle ja paina **Logout**.
+Now go back to the GeoServer maintenance page and press **Logout**.
 
-Palaa esikatselusivulle ja lataa sivu uudelleen painamalla F5. Sivu latautuu edelleen normaalisti.
+Return to the preview page and reload the page by pressing F5. The page will still load normally.
 
-Muutetaan asetuksia nyt niin, että palvelujen käyttö vaatii käyttäjältä tunnistautumisen, eivätkä kirjautumattomat käyttäjät pysty enää käyttämään palveluja. Avaa taas **Security → Authentication**, etsi **Filter Chains** ja paina **default**-linkkiä.
+Let's now change the settings so that the user must be logged in to access the services, and users who are not logged in will no longer be able to access the services. Open **Security → Authentication** again, search for **Filter Chains** and click on the **default** link.
 
-Valitse nyt **Chain filters** -kohdasta, **Selected**-laatikosta **anonymous** ja siirrä se **Available**-laatikkoon käyttäen laatikkojen välistä löytyviä siirtonuolia. Anonymous-tunnistautumistyyli sallii palveluiden käytön tunnistautumattomille käyttäjille.
+Now, under **Chain filters**, select **anonymous** from the **Selected** box and move it to the **Available** box using the arrows between the boxes. Anonymous authentication style allows services to be accessed by unauthenticated users.
 
 ![](img/harjoitus_12/image2.png)
 
-Nyt ainoastaan **basic**-tunnistautumisen tyyli on Selected-laatikossa eli käytössä. Tämä tarkoittaa sitä, että jatkossa tarvitaan aina tunnus ja salasana palvelimen käyttöön.
+Now only the **basic** authentication style is in the Selected box, i.e. in use. This means that in the future, you will always need an ID and password to access the server.
 
 ![](img/harjoitus_12/image3.png)
 
-Paina nyt **Close** ja pääset takaisin **Authentication** valikkoon. Paina sitten **Save**, niin muutokset tulevat voimaan.
+Now press **Close** to return to the **Authentication** menu. Then press **Save** and the changes will take effect.
 
-Jos kirjaudut nyt ulos GeoServeristä ja päivität aiemmin avattua esikatselusivua uudelleen, tunnuksella ja salasanalla tunnistautuminen on pakollista.
-
-::: hint-box
-Psst! Palvelimen pääsynhallinnan asetuksia voi helpoiten testata käyttämällä eri web-selainta (Internet Explorer / FireFox / Chrome) tai selaimen yksityisyyden salaavaa toimintoa (Incognito-mode) normaalin selaimen rinnalla. Toisella selaimella ollaan kirjautuneet ylläpitäjän tunnuksilla (kuten tähän asti) ja toisella kokeillaan erilaisia kirjautumistiloja. Voit kysyä opastusta kouluttajalta tarvittaessa. Huomaa, että mahdollisesti sinun täytyy kirjautua ulos ja uudelleen sisään asetusten uudelleen lataamista varten.
-:::
-
-## **Uuden roolin ja käyttäjän luominen**
-
-GeoServerin pääsynhallinnassa keskeisessä asemassa ovat käyttäjä-, ryhmä- ja rooliasetukset.
-
-Luodaan nyt uusi käyttäjä, jolla on vain oikeuksia käsitellä **helsinki**-workspace:n aineistoa.
-
-Avaa päävalikosta **Security → Users**, **Groups, and Roles**.
-
-**Services**-välilehdestä löytyvät käyttäjien ja roolien pääsynhallinnan asetukset. Niihin tallennetaan tietoja siitä, ketkä käyttäjät kuuluvat mihinkin ryhmään tai mitä rooleja on ylipäätänsä määritelty pääsynhallinnassa.
-
-Listalla on GeoServerin luomia **default**-asetuksia. Käytetään niitä nyt hyväksi.
-
-Luodaan ensin rooli, johon uusi käyttäjä tulee kuulumaan.
+If you now log out of GeoServer and refresh the preview page you opened earlier, authentication with your login and password is mandatory.
 
 ::: hint-box
-Psst! Pääsynhallinnan hallinnoimisen helpottamiseksi, oikeudet määritellään roolikohtaisesti.
+Psst! The easiest way to test the server's access control settings is to use a different web browser (Internet Explorer / FireFox / Chrome) or the browser's privacy encryption feature (Incognito mode) alongside your normal browser. One browser is used to log in with administrator identifiers (as up to now) and the other to test different login modes. You can ask the trainer for guidance if necessary. Please note that you may need to log out and log in again to reload the settings.
 :::
 
-Avaa **Roles**-välilehti ja paina **Add new role**, anna uudelle roolille nimeksi **hki_rooli**.
+## **Create a new role and user**
 
-![](img/harjoitus_12/image4.png)
+The user, group and role settings play a key role in GeoServer's access control.
 
-Paina sitten **Save**.
+Let's create a new user who only has rights to handle **helsinki** workspace data.
 
-Luodaan nyt uusi käyttäjä. Avaa **Users/Groups** -välilehti.
+From the main menu, open **Security → Users**, **Groups, and Roles**.
 
-Huomaa, että täällä on määritelty **admin**-tunnus, jota olet käyttänyt koulutuksen aikana.
+The **Services** tab provides access control settings for users and roles. They store information about which users belong to which groups, or which roles are defined in the access manager in general.
+
+The list contains **default** settings created by GeoServer. Let's take advantage of them now.
+
+First, let's create the role to which the new user will belong.
+
+::: hint-box
+Psst! To facilitate access control management, access rights are defined on a role-by-role basis.
+:::
+
+Open the **Roles** tab and press **Add new role**, name the new role **hki_role**.
+
+![](img/harjoitus_12/image4.2.png)
+
+Then press **Save**.
+
+A new user is now created. Open the **Users/Groups** tab.
+
+Note that the **admin** ID you used during the training is defined here.
 
 ![](img/harjoitus_12/image5.png)
 
-Luo uusi käyttäjä painamalla **Add new user**.
+Create a new user by pressing **Add new user**.
 
-Laita käyttäjän nimeksi **hki_kayttaja** ja salasanaksi **hki-kayttaja**.
+Enter **hki_user** as user name and **hki-user** as password.
 
 ::: hint-box
-Psst! Huomaa, että erikoismerkit ja ääkköset ovat sallittuja GeoServerissä, mutta tarkoituksenmukaisuuden ja eri selainten välisten erojen vuoksi tässä koulutuksessa vältetään niiden käyttöä.
+Psst! Please note that special characters and letters ä & ö are allowed in GeoServer, but for reasons of expediency and differences between browsers, their use will be avoided in this training.
 :::
 
-Uudelle käyttäjälle annetaan oikeuksia määrittämällä mitä rooleja käyttäjällä on. Roolit on määritelty **Roles taken from active role service: default** -kohdassa. Siinä on valittavissa muun muassa **hki_rooli**, lisää se **Selected Roles** -laatikkoon käyttäen laatikkojen välistä löytyviä siirtonuolia.
+A new user is given rights by specifying which roles the user has. The roles are defined in **Roles taken from active role service: default**. Among other things, **hki_role** can be selected, add it to the **Selected Roles** box using the transfer arrows found between the boxes.
 
-Paina sitten **Save**,niin uusi käyttäjä **hki_kayttaja** on luotu ja sillä on oikeudet **hki_rooli**:nmukaisesti. Koska **hki_rooli**:lle ei vielä ole määritelty oikeuksia, niin uudella käyttäjälläkään ei ole vielä määritelty mitään oikeuksia.
+Then press **Save**, then a new user **hki_user** has been created and has rights according to **hki_role**. Since no rights have been defined for **hki_role** yet, no rights have been defined for the new user either.
 
-![](img/harjoitus_12/image6.png)
+![](img/harjoitus_12/image6.2.png)
 
-Kokeile uuden käyttäjän oikeudet kirjautumalla sisään uudella käyttäjätunnuksella. Voit joko kirjautua uudestaan tai käyttämällä toista selainta, kuten aikaisemmin on mainittu.
+Try new user rights by logging in with a new username. You can either log in again or use a different browser, as mentioned earlier.
 
-## **Aineiston käyttöoikeuksien rajoittaminen**
+## **Limiting access rights to the data**
 
-Avaa **Security → Data.** Tässä näkymässä näkyvät GeoServer-palvelimen käyttäjille (rooleille) määritetyt säännöt. Oletusasennuksessa vain kaksi sääntöä on määritelty eli luku (r) ja kirjoitusoikeudet (w):
+Open **Security → Data.** This view shows the rules assigned to users (roles) of the GeoServer server. In the default installation, only two rules are defined, i.e. read (r) and write rights (w):
 
 ![](img/harjoitus_12/image7.png)
 
-**Rule path** -sarakkeen alla olevat säännöt ovat muodoltaan **\*.\*.r**, joka antaa lukemisoikeudet kaikille tasoille kaikissa workspace:ssa.
+The rules under the **Rule path** column are in the form **\*.\*.r**, which gives read access to all levels in all workspaces.
 
-Huomaa vielä, että **Roles**-sarakkeen alla on määritelty, mille rooleille oikeudet on myönnetty. Tässä on määritelty **\***-merkillä, joka tarkoittaa "kaikki roolit".
+Please also note that under the **Roles** column it is defined which roles have been granted rights. Defined here with **\*** to mean "all roles".
 
-Seuraava kuva esittää GeoServerin aineistosääntöjen määrittelyä:
+The following image shows the definition of GeoServer's data rules:
 
 ![](img/harjoitus_12/image8.png)
 
-Sääntö koostu kolmesta osasta, pisteellä eroteltuina. Ensimmäinen osa määrittelee workspacen, jolla sääntö on voimassa. Toinen osa määrittelee tason (layer), jolla sääntö on voimassa. Kolmas ja viimeinen osa määrittelee, mikä toiminto sallitaan. Toimintoja on kolme: lukeminen (r = read), kirjoittaminen (w = write) ja ylläpitäminen (a = admin).
+The rule consists of three parts, separated by a period. The first part defines the workspace where the rule is valid. The second part defines the layer on which the rule is valid. The third and last part defines which action is allowed. There are three functions: reading (r = read), writing (w = write) and maintaining (a = admin).
 
 ::: hint-box
-Psst! Kaikissa osissa voidaan käyttää myös \*-merkkiä, jolla voidaan viitata kaikkiin workspaceihin, tasoihin tai oikeuksiin.
+Psst! The \* character can also be used in all parts, which can be used to refer to all workspaces, layers or rights.
 :::
 
-Paina listalta **\*.\*.r**.
+Press **\*.\*.r** from the list.
 
-Tässä säännössä määritellään, että kaikkiin workspace:ihin ja kaikkiin tasoihin on lukemisoikeus.
+This rule specifies that all workspaces and all layers have read access.
 
 ![](img/harjoitus_12/image9.png)
 
-**Roles**-osion alla on määritelty se, että tämä sääntö kuuluu kaikille rooleille (**Grant access to any role**). Huomaa, että **Grant access to any role** on rastittu, joten kaikki roolit voivat lukea kaikki tasoja kaikista workspace:sta.
+Under the **Roles** section, it is defined that this rule applies to all roles (**Grant access to any role**). Note that **Grant access to any role** is checked, so all roles can read all levels from all workspaces.
 
-Rajoitetaan nyt sääntöä vain ylläpitäjien rooleille.
+Now let's limit the rule to admin roles only.
 
-![](img/harjoitus_12/image10.png)
+![](img/harjoitus_12/image10.2.png)
 
-Rastita pois **Grant access to any role** ja lisää roolit **Admin** ja **GROUP_ADMIN** laatikkoon **Selected Roles**.
+Uncheck **Grant access to any role** and add the roles **Admin** and **GROUP_ADMIN** to the box **Selected Roles**.
 
-Paina lopuksi **Save**.
+Finally press **Save**.
 
-Tee lopuksi samat muutokset **\*.\*.w** -säännölle.
+Finally, make the same changes to the **\*.\*.w** rule.
 
 ![](img/harjoitus_12/image11.png)
 
-Näiden muutosten jälkeen, vain **Admin**-tunnuksella on lukemis- ja esikatseluoikeudet.
+After these changes, only **Admin** has read and preview access.
 
-Kokeile nyt esikatsella jotain aineistoja **hki_kayttaja**-tunnuksella, yhtään aineistoa ei ole tarjolla.
+Now try to preview some data with the **hki_user** ID, no data is available.
 
-![](img/harjoitus_12/image12.png)
+![](img/harjoitus_12/image12.2.png)
 
-## **Aineiston käyttäjäkohtaiset käyttöoikeudet**
+## **User-specific access rights for the data**
 
-Seuraavaksi määritellään **hki_kayttaja**-tunnukselle luku- ja kirjoitusoikeudet **helsinki**-workspace:en. Käytännössä pitää määritellä oikeudet roolille johon käyttäjä kuuluu, eli **hki_rooli**-roolille.
+Next, read and write rights to the **helsinki** workspace are defined for the **hki_user** ID. In practice, rights must be defined for the role to which the user belongs, i.e. for the **hki_role** role.
 
-Tähän asti **hki_rooli**:lle ei ole annettu vielä mitään oikeuksia, täten **hki_kayttaja**:llä ei ole enää oikeuksia mihinkään aineistoon (ellei joku sääntö on määritelty kaikille rooleille käyttäen **\***-merkkiä).
+Until now, **hki_role** has not been given any rights, thus **hki_user** no longer has rights to any material (unless some rule has been defined for all roles using the **\*** character).
 
-Lisätään nyt **hki_kayttaja**:lle **Read**- ja **Write**-käyttöoikeudet, mutta vain **helsinki-**workspace:en. Tämä tapahtuu määrittämällä lisää aineiston sääntöjä.
+Let's now add **Read** and **Write** access rights to **hki_user**, but only to the **Helsinki** workspace. This is done by defining more rules for the data.
 
 ::: hint-box
-Psst! Varmista, että olet kirjautunut ylläpitäjänä (tunnus: admin ja salasana: gispo).
+Psst! Make sure you are logged in as an administrator (username: admin and password: gispo).
 :::
 
-Avaa taas **Security → Data** ja lisää nyt kaksi uutta sääntöä käyttäen **Add new rule** -valintaa.
+Open **Security → Data** again and now add two new rules using the **Add new rule** option.
 
-Laita **Workspace**-kohtaan **helsinki** ja jätä **Layer**-arvoksi "**\***", joka viittaa kaikkiin tasoihin.
+In **Workspace**, put **helsinki** and leave **Layer** as "**\***" which refers to all layers.
 
-Aseta **Access mode** -valikkoon arvoksi **Read**, joka antaa lukemisoikeudet edellä määrätyille aineistoihin.
+In the **Access mode** menu, set the value to **Read**, which gives reading rights to the data specified above.
 
-Siirrä lopulta **hki_rooli** laatikosta **Available Roles**, laatikkoon **Selected Roles**.
+Finally, move **hki_role** from the box **Available Roles**, to the box **Selected Roles**.
 
-![](img/harjoitus_12/image13.png)
+![](img/harjoitus_12/image13.2.png)
 
-Paina lopuksi **Save**. 
+Finally press **Save**. 
 
-Nyt **hki_kayttaja**:llä on read-oikeudet kaikkiin helsinki workspace:n tasoihin.
+Now **hki_user** has read rights to all layers of the Helsinki workspace.
 
-Lisää samalla tavalla vielä **Write**. Kirjoitusoikeudet sallivat käyttäjälle aineistojen muokkausoikeudet aina kun se on sallittu GeoServerissa, esimerkiksi WFS-T-palvelun kautta.
+Add **Write** in the same way. Write rights allow the user to edit data whenever it is allowed in GeoServer, for example through the WFS-T service.
 
-Kokeile uudelleen esikatsella aineistoja **hki_kayttaja**-tunnuksella. Esikatselu on mahdollista nyt kaikkien **helsinki**-workspacen tasojen kanssa, mutta muut tasot eivät näy.
+Try again to preview data with the **hki_user** ID. Preview is now possible with all layers of the **helsinki** workspace, but other layers are not visible.
 
-Huomaa, että käyttäjällä ei ole kuitenkaan oikeuksia lisätä GeoServeriin uusia aineistoja tai tasoja. Voit antaa **hki_kayttaja**-tunnukselle **Admin**-oikeudet määrittämällä vielä ylläpitäjän oikeudet.
+Please note that the user does not have rights to add new data or layers to GeoServer. You can give **hki_user** ID **Admin** rights by specifying administrator rights.
 
-Loppujen lopuksi on luotu kolme uutta sääntöä, jotka ovat **hki_rooli**:lla voimassa.
+At the end of the day, three new rules have been created that apply to **hki_role**.
 
-![](img/harjoitus_12/image14.png)
+![](img/harjoitus_12/image14.2.png)
 
-Kirjaudu uudelleen palvelimelle käyttäen **hki_kayttaja**-tunnusta ja tarkista, että **helsinki**-workspacen tasot ovat käytettävissä ja aineiston ylläpitäminenkin onnistuu. Huomaa, että muut workspacet eivät näy lainkaan.\
+Log in to the server again using the **hki_user** ID and check that the layers of the **Helsinki** workspace are available and that the data can be maintained. Note that the other workspaces are not visible at all.\
 
-![](img/harjoitus_12/image15.png)
+![](img/harjoitus_12/image15.2.png) 
 
-## **Karttapalvelukohtaiset oikeudet**
+\## **Map service-specific rights**
 
-Kirjaudu **admin**-tunnuksella uudelleen Geoserver palvelimelle.
 
-Samalla tavalla kuin äsken määriteltiin käyttäjäkohtaisesti oikeudet yhdelle workspace:lle, voidaan asettaa oikeudet palvelukohtaisesti eri käyttäjille.
+Geoserver's documentation says that “The default service security configuration in GeoServer contains no rules and allows any anonymous user to access any operation of any service. The following are some examples of desired security restrictions and the corresponding rules.” So, this means that there are no rules to be defined. The security page should look like this:
 
-Avaa **Security → Services**. Määriteltynä on oletuksena vain yksi sääntö **\*.\***. Samalla tavalla kuin aiemmin, tämä tarkoittaa se, että kaikki palvelujen toiminnot (säännön toinen **\***-merkki) ovat käytettävissä kaikissa palveluissa (säännön ensimmäinen **\***-merkki).
+![](img/harjoitus_12/image19.png)
 
-Seuraava kuva esittää GeoServerin palvelusääntöjen määrittelyä:
+The following image shows the definition of GeoServer's service access rules:
 
 ![](img/harjoitus_12/image16.png)
 
-Avaa sääntö **\*.\*** ja rajoita sen käyttöä vain ylläpitäjille.
 
-![](img/harjoitus_12/image17.png)
 
-Paina **Save**. Nyt GeoServerin palvelut ovat käytettävissä ainoastaan ylläpito-rooleille.
 
-Luo sen jälkeen sääntö, joka on käytössä vain **hki_rooli**:lle ja sillä on oikeudet käyttää kaikkia **WMS-karttapalvelujen** toimintoja.
-
-::: hint-box
-Psst! Huomaa, että säännöt eivät välttämättä tule voimaan kuin vasta käyttäjän seuraavalla istunnolla.
-:::
-
-Lopussa **Service access rules list** -näkymä näyttää tältä:
-
-![](img/harjoitus_12/image18.png)
-
-Kirjaudu taas **hki_kayttaja**:nä ja kokeile esikatsella jotain aineistoa sekä WMS- että WFS-karttapalveluna. WFS-esikatselu ei enää onnistu, koska kyseisellä käyttäjällä ei ole oikeuksia WFS-toimintoihin, vain WMS-toimintoihin. 
-
-Poista lopuksi edellisessä kuvassa näkyvä sääntö (wms.\*), jotta wms-palvelu olisi taas käytettävissä kaikilla käyttäjillä.

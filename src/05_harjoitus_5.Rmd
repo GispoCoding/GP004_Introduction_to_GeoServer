@@ -1,190 +1,186 @@
-# HARJOITUS 1.5: WMS- JA WCS-PALVELUT
+# EXERCISE 1.5: WMS AND WCS SERVICES
 
-**Harjoituksen sisältö**
+**Content of the exercise**
 
-Harjoituksessa tutustutaan GeoServerin WMS- ja WCS-palveluiden asetuksiin.
+This exercise introduces you to the settings of the WMS and WCS services in GeoServer.
 
-**Harjoituksen tavoite**
+**Aim of the exercise**
 
-Harjoituksen jälkeen opiskelija ymmärtää eri karttapalvelujen kokonaisuudet ja osaa muokata niiden perusasetuksia.
+After the exercise, the student will understand the different map services and be able to modify their basic settings.
 
-**Arvioitu kesto**
+**Estimated duration**
 
-50 minuuttia.
+50 minutes.
 
-## **Valmistautuminen**
+## **Preparation**
 
-Aiemmissa harjoituksissa on luotu GeoServerin palvelimeen taso **rakennukset**, ja sille tasolle on luotu uusi kuvaustekniikka (rakennukset).
+In previous exercises, a layer **Buildings** has been created and a new styling definition (buildings) has been created for this layer.
 
-## **OGC-standardit**
+## **OGC-standards**
 
-Kaikista tasoista, jotka on lisätty GeoServeriin, voidaan julkaista erilaisia rajapintapalveluja.
+For all layers added to GeoServer, different interface services can be published.
 
-Yleisin rajapintapalvelu on karttapalvelu **Web Map Service** (**WMS**). GeoServerin avulla voidaan tuottaa WMS-palvelu eri paikkatietoaineistoja ja kuvaustekniikoita hyväksikäyttäen.
+The most common interface service is the **Web Map Service** (**WMS**). GeoServer can be used to produce a WMS service using different spatial data sets and styling techniques.
 
-Muita rajapintapalveluja ovat muun muassa **Web Coverage Service** (**WCS**), joka mahdollistaa raakarasteriaineistojen julkaisemisen ja **Web Feature Service** (**WFS**), jota käytetään vektoriaineistojen rajapintapalveluna.
+Other interface services include the **Web Coverage Service** (**WCS**), which enables the publication of raw raster data, and the **Web Feature Service** (**WFS**), which is used as an interface service for vector data.
 
-## **Yleiset karttapalveluasetukset**
+## **General map service settings**
 
-Eri rajapintapalvelujen yleiset asetukset löytyvät päävalikosta **Services**-kohdasta. Näitä yleisiä asetuksia käytetään oletuksena aina, kun aineistoja julkaistaan GeoServerin kautta.
+The general settings for the various interface services can be found in the **Services** section of the main menu. These general settings are used by default whenever data is published via GeoServer.
 
-Käytännössä kaikki aiemmin lisätyt aineistot ovat jo valmiiksi julkaistu rajapintapalveluina, koska kaikki edellä käydyt kolme palvelua (WMS, WCS ja WFS) on aktivoitu koulutuksen GeoServerin oletusasennuksessa.
+In practice, all previously added data are already published as interface services, because all three services (WMS, WCS and WFS) are activated in the default installation of the training GeoServer.
 
-Olemme esimerkiksi käyttäneet WMS-karttapalvelua aina kun olemme esikatselleet jotain tasoa selaimella.
+For example, we have used the WMS map service whenever we have previewed a layer in the browser.
 
-Avaa **Services → WMS-näkymä**.
+Open **Services → WMS view**.
 
-Asetusten sivun alussa löytyy **Service Metadata** -tiedot.
+At the top of the settings page you will find **Service Metadata** information.
 
-Tarkista, että **Enable WMS** -valinta on rastitettuna. Toiminnon ollessa valittuna GeoServer-palvelin tuottaa WMS-karttapalvelua. Jos tämä valinta ei ole rastittu, mikään aineisto ei ole saatavilla WMS-karttapalveluna. Rajapintapalveluiden saatavuutta voidaan hallita myös workspace-kohtaisesti.
+Check that the **Enable WMS** option is checked. If this option is checked, the GeoServer server will provide a WMS map service. If this option is not checked, no data is available as WMS map service. The availability of interface services can also be managed on a workspace-by-workspace basis.
 
-Kaikkien karttapalveluiden toiminnallisuutta ja palvelinasetuksia voi myös määrittää seuraavien kohtien mukaisesti: **Maintainer**, **Online resource**, **Title**, **Abstract**, **Fees**, **Access Constraints** ja **Keywords**-asetusten avulla määritetään tietoja palvelusta ja sen ylläpitäjästä.
+The functionality and server settings of all map services can also be configured according to the **Maintainer**, **Online resource**, **Title**, **Abstract**, **Fees**, **Access Constraints** and **Keywords** settings to specify information about the service and its administrator.
 
 ::: hint-box
-Psst! Nämä metadatan asetukset ovat samankaltaiset myös WFS- ja WCS-palvelujen kohdalla.
+Psst! These metadata settings are also similar for WFS and WCS services.
 :::
 
-Määrittele näitä tietoja WMS-palvelulle. Voit kirjoittaa muistiinpanot harjoituksen viimeiselle sivulle.
-![](img/harjoitus_5/image1.png)
+Configure this information for the WMS service. You can write the notes on the last page of the exercise.
+
+![](img/harjoitus_5/image1.2.png)
 
 ## **WMS**
 
-**Web Map Services** (**WMS**) -karttapalvelu tuottaa georeferoituja karttakuvia.
+The **Web Map Services** (**WMS**) map service produces georeferenced map images.
 
 ::: hint-box
-Psst! Karttakuvat luodaan aina GeoServerin saadessa WMS-pyyntöjä käyttöliittymästä. Lisäksi GeoServer käyttää hyväkseen palvelimen välivarastossa (cache) olemassa olevia karttakuvia. GeoServer saa pyyntöjä aina kun palvelimeen otetaan yhteys, mutta myös silloin kun kartalla zoomataan (vaihdetaan mittakaavaa) tai siirrytään paikasta toiseen.
+Psst! Map images are always created when GeoServer receives WMS requests from the interface. In addition, GeoServer makes use of existing map images in the server cache. GeoServer receives requests whenever the server is connected to, but also when the map is zoomed in or out or moved from one location to another.
 :::
 
-Avaa **Services → WMS** uudelleen.
+Open **Services → WMS** again.
 
-Perustietojen lisäksi jokaisella karttapalvelulla on omat asetuksensa, jotka määrittävät karttapalvelun toiminnallisuutta. Näitä on runsaasti WMS-palvelun osalta. Esimerkiksi, kuvien luomiseen voi valita interpoloinnin menetelmäksi **Raster Rendering Options** -kohdassa: **Nearest Neighbor**, **Bilinear** tai **Bicubic**. Oletuksena valittu **Nearest neighbor** -menetelmä on suositeltava valinta rasterien perusvisualisointiin.
+In addition to the basic information, each map service has its own regulations that define the functionality of the map service. There are many of these for the WMS service. For example, to create images, you can select **Nearest Neighbor**, **Bilinear** or **Bicubic** as the interpolation method in **Raster Rendering Options**. The default **Nearest neighbor** method is the recommended choice for basic raster visualization.
 
-Yksi kiinnostava asetus WMS-palvelulle on vesileimojen käyttäminen. Vesileimoja voidaan lisätä WMS-karttakuviin **Watermark Settings** -kohdasta. Huomaa kuitenkin, että päävalikon WMS-asetuksissa määritellään oletuksia kaikille GeoServerin aineistoille. Tasokohtaisia vesileimoja ei voi määrittää, mutta vesileimoja voidaan määrittää workspace-kohtaisesti.
+One interesting setting for the WMS service is the use of watermarks. Watermarks can be added to WMS map images from **Watermark Settings**. Note, however, that the WMS settings in the main menu define defaults for all GeoServer data. Layer-specific watermarks cannot be defined, but watermarks can be defined per workspace.
 
-Kokeillaan asettaa palvelimen WMS-palvelulle GeoServer-logo vesileimaksi.
+Let's try watermarking the server's WMS service with the GeoServer logo.
 
-Avaa **Services → WMS** ja etsi kohta **Watermark Settings** ja varmista, että **Enable watermark** on rastittuna.
+Open **Services → WMS** and look for **Watermark Settings** and make sure **Enable watermark** is checked.
 
 ![](img/harjoitus_5/image2.png)
 
-Käytä sitten **Browse\...** valitsemaan GeoServerin logo (**/koulutus/GeoServer_100.png)**
+Then use **Browse\...** to select the GeoServer logo (**/training/GeoServer_100.png)**
 
-Laita vielä läpinäkyvyyttä **30**:ksi ja sijainniksi **Bottom right**.
+Set the transparency to **30** and the position to **Bottom right**.
 
-Paina nyt **Submit** tallentaaksesi muutokset WMS-palveluun. Kaikkien WMS-palvelukartan kautta saatujen karttojen pitäisi nyt sisältää vesileima.
+Now press **Submit** to save the changes to the WMS service. All maps received via the WMS service map should now contain a watermark.
 
-Avaa **Data → Layer Preview**, ja esikatsele joitakin tasoja. Tarkista, että vesileima tulee näkyviin kaikissa WMS-pyynnöissä.
+Open **Data → Layer Preview**, and preview some layers. Check that the watermark appears in all WMS requests.
 
-Esimerkiksi, **states**-taso näyttää tältä OpenLayers-esikatselunäkymässä:
-![](img/harjoitus_5/image3.png)
+For example, the **states** layer will look like this in the OpenLayers preview view: ![](img/harjoitus_5/image3.png)
 
-Kokeile myös muita karttatasoja ja huomaa, että kaikissa on nähtävissä nyt GeoServer-logon vesileima ja se pysyy siellä karttaa liikuteltaessa. States-aineisto on vektoriaineisto.
+Try the other map layers and notice that all of them now have the GeoServer logo watermark visible and it stays there when you move the map. States data is vector data.
 
 ::: hint-box
-Mikä GeoServer-palvelu (WMS, WFS tai WCS) käyttää OpenLayersia? Psst! Kannattaa katsoa selaimen osoitteeseen.
+Which GeoServer service (WMS, WFS or WCS) uses OpenLayers? Psst! You should have a look at your browser address.
 :::
 
-WMS-palvelua hyödyntävä verkkokartta tuotetaan alkuperäisten aineistojen ja tyylien kautta palvelimessa ja välitetään kuvana selaimen kautta. Vektoriaineistoja, rasteriaineistoja ja niiden yhdistelmiä (ryhmätasoina) voidaan välittää WMS-palvelun kautta.
+The WMS web map is produced from the original data and styles on the server and transmitted as an image via the browser. Vector data, raster data and their combinations (as group layers) can be transmitted via the WMS service.
 
-## **Workspace-kohtaiset palvelimen asetukset**
+## **Workspace-specific server settings**
 
-Äsken määriteltiin vesileima WMS-karttapalvelulle yleisesti. Asetuksia voi määrittää myös workspace-kohtaisesti. Tätä tehdään workspace-asetusten näkymässä.
+A watermark was just configured for the WMS map service in general. You can also configure settings on a workspace-specific basis. This is done in the workspace settings view.
 
-Avaa **Data → Workspaces**.
+Open **Data → Workspaces**.
 
-Muokataan seuraavaksi **helsinki**-workspacen asetuksia. Valitse se **Workspace Names** -kohdan alta. 
+Next, let's edit the settings of the **helsinki** workspace. Select it under **Workspace Names**.
 
-Rastita sitten **Settings → Enabled** ja oikealta **Services** → **WMS**.
+Then check **Settings → Enabled** and from the right **Services** → **WMS**.
 
-Voit täyttää nyt tämän workspace-kohtaiset yhteystiedot kuvaamaan Helsingin WMS-karttapalvelua.
-![](img/harjoitus_5/image4.png)
+You can now fill in this workspace-specific contact information to describe the Helsinki WMS map service.
 
-Selaa alaspäin ja paina **Save**.
+![](img/harjoitus_5/image4.2.png) ![](img/harjoitus_5/image4.3.png)
 
-Nyt muut GeoServer-palvelimessasi olevat WMS-karttapalvelut sisältävät oletustiedot (määritelty **About & Status → Contact Information**), kun taas **helsinki**-workspace WMS-palvelun tiedot ovat ne jotka juuri määritettiin.
+Scroll down and press **Save**.
 
-Tiedot voit tarkistaa Getcapabilities-pyynnöllä seuraavasti:
+Now the other WMS map services on your GeoServer server will contain the default information (defined in **About & Status → Contact Information**), while the **helsinki**-workspace WMS service will have the information that was just defined.
+
+You can check the information with a GetCapabilities request as follows:
 
 -   Helsinki-workspace: [http://xx.xx.xx.xx/geoserver/helsinki/wms?REQUEST=GetCapabilities](http://xx.xx.xx.xx/geoserver/helsinki/wms?REQUEST=Getcapabilities)
 
 -   Tiger-workspace: [http://xx.xx.xx.xx/geoserver/tiger/wms?REQUEST=GetCapabilities](http://xx.xx.xx.xx/geoserver/helsinki/wms?REQUEST=Getcapabilities)
 
--   Geoserver oletus: [http://xx.xx.xx.xx/geoserver/wms?REQUEST=GetCapabilities](http://xx.xx.xx.xx/geoserver/helsinki/wms?REQUEST=Getcapabilities)
+-   GeoServer default: [http://xx.xx.xx.xx/geoserver/wms?REQUEST=GetCapabilities](http://xx.xx.xx.xx/geoserver/helsinki/wms?REQUEST=Getcapabilities)
 
-\
-![](img/harjoitus_5/image5.png)
+![](img/harjoitus_5/image5.2.png) ![](img/harjoitus_5/image5.3.png)
 
-## **WMS-karttapalvelun kuvan DPI-resoluutio**
+## **DPI resolution of the WMS map service image**
 
-Karttapalvelimet palauttavat kuvat oletuskuvaresoluutiossa, jonka OGC on määritellyt arvolla **90 DPI** (Dots Per Inch). Tämä dpi-arvo on varsin pieni, mutta sopiva yleisimmissä käyttöyhteyksissä eli tietokoneella tai älypuhelimella. Suurempi karttakuvaresoluutio on tarpeellista esimerkiksi silloin kun työasemapaikkatieto-ohjelmistojen avulla halutaan tuottaa karttatulosteita, joissa on WMS-tasoja.
+Map servers return images at the default image resolution set by the OGC to **90 DPI** (Dots Per Inch). This DPI value is quite low, but suitable for the most common use contexts, i.e. on a computer or smartphone. A higher map image resolution is necessary, for example, when using workstation location software to produce map output with WMS layers.
 
 ::: hint-box
-Psst! DPI-arvo on oletusarvoisesti pieni, jotta se ei ylikuormita palvelinta ja mahdollistaa saumattoman karttapalveluiden toimimisen.
+Psst! The DPI value is set low by default to avoid overloading the server and to allow seamless map services.
 :::
 
-Palveluille on mahdollista määrittää muita kuvaresoluutioita muokkaamalla WMS-karttapyyntöjen parametreja.
+It is possible to specify other screen resolutions for services by modifying the parameters of WMS map requests.
 
-Kokeile nyt esikatsella **poly_landmarks-**tasoa JPEG-kuvana. Löydät tason helposti **Layer preview** -näkymästä:
-![](img/harjoitus_5/image6.png)
+Now try to preview **poly_landmarks-** as a JPEG image. You can easily find the layer in the **Layer preview** view: ![](img/harjoitus_5/image6.png)
 
-Tuloksena saat karttakuvan JPEG-formaatissa oletusresoluutiolla eli DPI-arvolla 90:\
+The result is a map image in JPEG format at the default resolution of 90 DPI:\
 ![](img/harjoitus_5/image7.png)
 
-Jos suurennat kuvaa selaimessa (tai tallennat sen kovalevylle ja katselet sitä valokuvien/kuvien katseluohjelmassa) huomaat, että resoluutio on varsin huono.
+If you enlarge the image in your browser (or save it to your hard drive and view it in a photo/image viewer) you will notice that the resolution is quite poor.
 
 ![](img/harjoitus_5/image8.png)
 
-Valitse ja kopioi koko selaimessa oleva osoitteen teksti. Avaa tekstinkäsittelyohjelma ja liimaa teksti siihen. Se on http-pyyntö GeoServerin palvelimellesi ja se muistuttaa seuraavaa tekstiä:
+Select and copy the full text of the address in the browser. Open a text editor and paste the text into it. It is an http request to your GeoServer server and resembles the following text:
 
 ::: note-box
 [http://xx.xx.xx.xx:8080/geoserver/tiger/wms?service=WMS&version=1.1.0&request=GetMap &layers=tiger:poly_landmarks&styles=&bbox=-74.047185,40.679648,-73.90782,40.882078 **&width=528&height=768**&srs=EPSG:4326**&format=image%2Fjpeg**](http://xx.xx.xx.xx:8080/geoserver/tiger/wms?service=WMS&version=1.1.0&request=GetMap%20&layers=tiger:poly_landmarks&styles=&bbox=-74.047185,40.679648,-73.90782,40.882078%20&width=528&height=768&srs=EPSG:4326&format=image%2Fjpeg)
 :::
 
-Tekstiin on korostettu tärkeimmät parametrit koskien WMS-kuvaa. Niistä voi tulkita seuraavaa:
+The text highlights the most important parameters concerning the WMS image. They can be interpreted as follows:
 
--   **&width** ja **&height**:kuvan koko on 528\*768 pikseliä ja 
+-   **&width** and **&height**: image size is 528\*768 pixels and
 
--   **&format**: formaatti on JPEG
+-   **&format**: the format is JPEG
 
--   Kuvan resoluutiosta ei ole mitään mainittu pyynnössä, joten käytössä on oletusresoluutio.
+-   The resolution of the image is not mentioned in the request, so the default resolution is used.
 
-Määrittääksesi kuvaresoluutiota voit lisätä seuraavan parametrin http-pyynnön loppuun: **&format_options=dpi:300**. Lisää se siis WMS-pyyntösi loppuun, ja kopioi ja liimaa se nyt kokonaisuudessaan uuteen selainikkunaan vertailua varten. Painamalla **enter** saat aikaiseksi uuden kuvan:
-![](img/harjoitus_5/image9.png)
+To specify the image resolution, you can add the following parameter to the end of the http request: **&format_options=dpi:300**. So add it to the end of your WMS request, and now copy and paste it in its entirety into the new browser window for comparison. Press **enter** to create a new image: ![](img/harjoitus_5/image9.png)
 
-Huomataan, että tyylit eivät täsmää aikaisempaan. Se johtuu siitä, että pyynnössä pitää myös muokata kuvan kokoa, joka on laskettu oletusresoluutiolle sopivaksi. Nyt WMS-karttapalvelun tuottama JPEG-kuva on tuotettu kuitenkin jo korkeammalla resoluutiolla kuin aikaisemmin.
+It is noted that the styles do not match the previous ones. This is because the request also needs to edit the image size, which is calculated to fit the default resolution. However, now the JPEG image produced by the WMS map service is already produced at a higher resolution than before.
 
-Resoluutiot voidaan tarkistaa halutessaan tallentamalla molemmat kuvat kovalevylle ja vertaamalla niitä zoomaamalla käyttämäsi käyttöjärjestelmän kuvien esikatseluohjelman avulla.
+Resolutions can be checked if desired by saving both images to a hard disk and comparing them by zooming in using the image previewer of the operating system you are using.
 
-Kuten sanottu, tyylit eivät nyt näytä oikeilta, koska oletuspyynnössä on kuvan koko laskettu 90 DPI resoluution mukaiseksi. Nyt on siis muokattava **&width-** ja **&height**-parametrien arvot yhteensopivaksi uuteenresoluutioon eli arvolle **300 DPI**. Tämä tapahtuu käyttämällä seuraavaa yhtälöä:
-![](img/harjoitus_5/image10.png)
+As I said, the styles don't look correct now, because the default request has the image size calculated to 90 DPI resolution. So now we need to modify the values of the **&width** and **&height** parameters to match the new resolution of **300 DPI** using the following equation: ![](img/harjoitus_5/image10.png)
 
 ![](img/harjoitus_5/image11.png)
 
--   uusi_leveys = kuvan_oletusleveys \* (uusi_resoluutio/90)
+-   new_width = image_defaultwidth \* (new_resolution/90)
 
--   uusi_pituus = kuvan_oletuspituus \* (uusi_resoluutio/90)
+-   new_length = image_defaultlenght \* (new_resolution/90)
 
-Eli meidän tapauksessamme:
+So in our case:
 
--   uusi_leveys = 528 \* (300/90) → **&width=1760**
+-   new_width = 528 \* (300/90) → **&width=1760**
 
--   uusi_pituus = 768 \* (300/90) → **&height=2560**
+-   new_length = 768 \* (300/90) → **&height=2560**
 
-Palaa uudelleen tekstinkäsittelyohjelmistoon ja muokkaa wms-pyyntöäsi yllä mainituilla tiedoilla. Kun kokeilet uutta pyyntöä selaimella, kuvan koko, resoluutio ja tyylit ovat oikein:
-![](img/harjoitus_5/image12.png)
+Go back to your text editor and edit your wms request with the above information. When you try the new request in your browser, the image size, resolution and styles will be correct: ![](img/harjoitus_5/image12.png)
 
-WMS-palveluja käyttävät ohjelmistot, kuten QGIS, rakentavat automaattisesti edellä kuvatun prosessin mukaisia pyyntöjä esimerkiksi karttataitossa (tulostekartta), mikä säästää käyttäjän määrittämästä manuaalisesti kuvan kokoa ja resoluution arvoa.
+Software that uses WMS services, such as QGIS, automatically builds requests according to the process described above, for example in a map (output map), saving the user from having to manually specify the image size and resolution value.
 
 ## **WCS**
 
-Avaa **Services → WCS**.
+Open **Services → WCS**.
 
-Totuttuun tapaan voidaan päättää, halutaanko GeoServerin tuottavan raakarasterikarttaa. Se määritellään **Enable WCS** -valinnalla. Raakarasteriaineistojen jakamista on hyvä harkita tarkasti. Palvelu voi aiheuttaa suuria datasiirtomääriä verkkoyhteydelle. Lisäksi WCS-palvelun materiaaliksi sopii käytännössä vain luokitellut rasteriaineistot, ilma- ja satelliittikuvat. 
+As usual, you can decide whether you want GeoServer to produce a raw raster map. This is defined by the **Enable WCS** option. The sharing of raw raster data should be carefully considered. The service may cause high data transfer volumes on the network connection. Furthermore, in practice only classified raster data, aerial and satellite imagery are suitable for the WCS service. 
 
-**Coverage processing** -kohdan alta löytyy WCS-palvelun asetukset. **Use subsampling** -valinnan aktivointi pienentää käsiteltävää datamäärää, mikä on hyödyllistä käytettäessä aineistoa alkuperäistä pienemmällä resoluutiolla.
+Under **Coverage processing** you will find the settings for the WCS service. Activating the **Use subsampling** option reduces the amount of data to be processed, which is useful when using data at a lower resolution than the original.
 
-Samalla tavalla, **Overview policy** -toiminto mahdollistaa aineiston yleiskatsausten käytön (näiden ollessa olemassa palvelimessa), mikä osaltansa vähentää siirrettävän tiedon määrää (vähemmän gigatavuja). Oletus on, ettei yleiskatsausta käytetä. Huomaa, että yleiskatsaukset aineistoista on luotava erikseen.
+Similarly, the **Overview policy** option allows the use of overviews of the data (if they exist on the server), which contributes to reducing the amount of data to be transferred (fewer gigabytes). The assumption is that the overview is not used. Note that overviews of data sets must be created separately.
 
-**Resource Consumption Limits** -valintaa käyttämällä ylläpitäjä voi asettaa resurssien käytölle rajoja raakarasteriaineistoja käsiteltäessä. Raaka-aineistojen koko voi olla hyvinkin suuri (lähtökohtaisesti kymmeniä tai satoja gigatavuja) ja palvelin voi ylikuormittua pyyntöjä käsiteltäessä.
+The **Resource Consumption Limits** option allows the administrator to set resource consumption limits when processing raw raster data. The size of raw resources can be very large (tens or hundreds of gigabytes by default) and the server can become overloaded when processing requests.
 
 ![](img/harjoitus_5/image13.png)

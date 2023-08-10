@@ -31,18 +31,15 @@ Yksinkertaisimmillaan nämä kyselylauseet voivat siis olla esim. muotoa fieldna
 Kirjoita hakulausekkeet ylös omiin muistiinpanoihin.
 
 ::: hint-box
-Missä osavaltioissa väkiluku on yli 15 miljoonaa asukasta?
-Psst! Klikkaa ensin osavaltiota ja tarkista väkiluvun sisältävän ominaisuustietokentän nimi.
+Missä osavaltioissa väkiluku on yli 15 miljoonaa asukasta? Psst! Klikkaa ensin osavaltiota ja tarkista väkiluvun sisältävän ominaisuustietokentän nimi.
 :::
 
 ::: hint-box
-Minkä osavaltioiden väkiluku on yli miljoona, mutta vähemmän kuin kolme miljoonaa? Montako osavaltiota piirtyy kartalle?
-Psst! Voit käyttää operaattoria “BETWEEN - - AND - -”.
+Minkä osavaltioiden väkiluku on yli miljoona, mutta vähemmän kuin kolme miljoonaa? Montako osavaltiota piirtyy kartalle? Psst! Voit käyttää operaattoria "BETWEEN - - AND - -".
 :::
 
 ::: hint-box
-Minkä osavaltioiden nimet alkavat C-kirjaimella?
-Psst! Käytä operaattoria “LIKE” ja villikortti-symbolia “%”. Laita osavaltion nimi lainausmerkkien sisään (‘ ‘).
+Minkä osavaltioiden nimet alkavat C-kirjaimella? Psst! Käytä operaattoria "LIKE" ja villikortti-symbolia "%". Laita osavaltion nimi lainausmerkkien sisään (' ').
 :::
 
 ::: hint-box
@@ -50,8 +47,7 @@ Missä osavaltioissa on enemmän miespuolisia asukkaita?
 :::
 
 ::: hint-box
-Mitkä osavaltiot leikkaavat 100º läntistä pituuspiiriä?
-Psst! Lauseke on muotoa “BBOX(geometriasarake, xmin, ymin, xmax, ymax)”. Osavaltioiden geometria on kentässä “the_geom”.
+Mitkä osavaltiot leikkaavat 100º läntistä pituuspiiriä? Psst! Lauseke on muotoa "BBOX(geometriasarake, xmin, ymin, xmax, ymax)". Osavaltioiden geometria on kentässä "the_geom".
 :::
 
 GeoServerin dokumentaatiosta löytyy tarkempia kuvauksia (**Tutorials → CQL and ECQL**).

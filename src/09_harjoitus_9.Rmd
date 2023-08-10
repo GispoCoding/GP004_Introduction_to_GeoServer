@@ -1,336 +1,314 @@
-# HARJOITUS 2.2: KARTTATIILIPALVELUT
+# EXERCISE 2.2: MAP TILE SERVICES
 
-**Harjoituksen sisältö**
+**Content of the exercise**
 
-Harjoituksessa hyödynnetään GeoServerissa olevia karttatiilien ja ruudukkojen luontityökaluja.
+We will use map tiles and grid creation tools available in GeoServer in this exercise.
 
-**Harjoituksen tavoite**
+**Aim of the exercise**
 
-Harjoituksen jälkeen opiskelija pystyy luomaan ja säätämään omia karttatiilipalveluja.
+After the exercise, the student will be able to create and configure their own map style services.
 
-**Arvioitu kesto**
+**Estimated duration**
 
-40 minuuttia.
+40 minutes.
 
-## **Valmistautuminen**
+## **Preparation**
 
-GeoServerin palvelimeen on ladattu ja julkaistu useita rasteri- ja vektoriaineistoja. GeoServerin oletusasennukseen on myös integroitu GeoWebCache, jota GeoServer käyttää karttatiilien luomiseen ja hallitsemiseen.
+Several raster and vector datasets have been uploaded and published on the GeoServer server. GeoServer's default installation also includes GeoWebCache, which GeoServer uses to create and manage map tiles.
 
 ## **Tile Caching**
 
-GeoServer sisältää **Tile**-palvelut osana **GeoWebCache-**palvelua.
+GeoServer includes **Tile** services as part of the **GeoWebCache** service.
 
-Avaa **Tile Caching → Caching defaults** ja tarkista, mitkä karttatiilipalvelut ovat käytössä GeoServerin asennuksessasi.
+Open **Tile Caching → Caching defaults** and check which mapping tile services are enabled in your GeoServer installation.
 
-![](img/harjoitus_9/image1.png)
+![](img/harjoitus_9/image1.2.png)
 
-Oletuksena aktivoituna ovat **WMS-C**- (WMS Service-Cached) ja **TMS** (Tile Map Service)-karttatiilipalvelut.
+By default, the **WMS-C** (WMS Service-Cached) and **TMS** (Tile Map Service) map tile services are activated.
 
-Avaa vielä **Tile Caching → Tile Layers** ja huomaa myös, että kaikille tasoille on automaattisesti luotu oma karttatiilitaso.\
+Open **Tile Caching → Tile Layers** and you will also notice that a map tile layer is automatically created for each layer.\
 ![](img/harjoitus_9/image2.png)
 
-## **GeoWebCache-käyttöliittymä**
+## **GeoWebCache user interface**
 
-Yleisimmät karttatiilipalvelun asetukset määritellään jo tutuiksi tulleissa eri GeoServerin web-käyttöliittymän asetusosissa. Tarkemmin karttatiilipalvelun toimintaa hallitaan GeoWebCache:n käyttöliittymästä.
+The most common settings for the map tile service are defined in the various settings sections of the GeoServer web interface that you are already familiar with. More specifically, the operation of the map tile service is controlled from the GeoWebCache interface.
 
-Palaa **Tile Caching → Caching Defaults** -näkymään ja avaa vielä GeoWebCache:n oma asetusnäkymä painamalla **Go to the embedded GeoWebCache home page**.\
-![](img/harjoitus_9/image3.png)
+Return to **Tile Caching → Caching Defaults** and click **Go to the embedded GeoWebCache home page**..
 
-GeoWebCache on oletuksena asennettu GeoServeriin ja se hallitsee kaikkia karttatiiliä, joita jaetaan karttatiilipalvelujen kautta.
+![](img/harjoitus_9/image3.2.png)
 
-Avaa lista demoista **A list of all the layers and automatic demos**.
+GeoWebCache is installed by default on GeoServer and manages all map tiles that are shared through the map tiles services.
 
-Kaikilla GeoServerin tasoilla on oma karttatiilipalvelu käytössä: ![](img/harjoitus_9/image4.png)
+Open the list of demos **A list of all the layers and automatic demos**.
 
-Avaa **helsinki:ilmakuvat** OpenLayers **png**-esikatselu linkkiä ja selaile karttaa. Huomaat, miten eri karttatiilet lasketaan ja piirretään näyttöön sen mukaan kun palvelin saa niitä luotua.
+All GeoServer layers have their own map tile service enabled: ![](img/harjoitus_9/image4.2.png)
 
-Testaa, että karttatiilet pysyvät palvelimessa uudelleen käytettävänä siirtymällä kartalla paikasta toiseen suurin piirtein samalla kartta-alueella. Karttatiilet tulevat nyt nopeammin näkyviin, koska GeoServerin ei enää tarvitse piirtää niitä, vaan se vain välittää palvelimella jo valmiina olevia karttatiiliä.
+Open **helsinki:aerial image** OpenLayers **png** preview link and browse the map. You will see how the different map tiles are calculated and drawn on the screen as the server generates them.
 
-## **Tasokohtaiset asetukset**
+Test that the map tiles remain reusable on the server by moving from one place on the map to another in roughly the same map area. The map tiles will now appear more quickly because GeoServer no longer needs to draw them, it just passes on the map tiles that are already available on the server.
 
-Tasojen karttatiiliasetukset löytyvät päävalikon **Tile Caching → Tile Layers** -näkymän kautta. Avaa **helsinki:ilmakuvat_keskusta** -tason ominaisuudet painamalla tason linkkiä taulusta. ![](img/harjoitus_9/image5.png)
+## **Layer-specific settings**
 
-Valitse sitten **Tile Caching**.
+The map tile settings for the layers can be found in the **Tile Caching → Tile Layers** view of the main menu. Open the **helsinki:aerial_images** layer properties by clicking on the layer link in the table. ![](img/harjoitus_9/image5.2.png)
 
-![](img/harjoitus_9/image6.png)
+Then select **Tile Caching**.
 
-Oletusasetukset on määritelty siten, että kaikille uusille tasoille luodaan automaattisesti karttatiilet. Myös sekä jpeg- että png-kuvatiilet ovat oletuksena aktivoituna.
+![](img/harjoitus_9/image6.2.png)
 
-Selaa vielä tämän näkymän alaosaan, josta selviää **Available gridsets** -osiosta, että kaksi eri karttatiiliruudukkoa on oletuksena käytössä: **EPSG:4326** (WGS 84) ja **EPSG:900913** (Google Mercator): ![](img/harjoitus_9/image7.png)
+The default settings are defined so that map tiles are automatically created for all new layers. Also, both jpeg and png image tiles are activated by default.
 
-::: hint-box
-Psst! Tasokohtaisia tiilitysasetuksia pääset myös muokkaamaan Data → Layers näkymän kautta valitsemalla tason ja sen jälkeen Tile Caching -välilehden.
-:::
-
-## **Karttatiilien esiluominen**
-
-Palaa **Tile Caching → Tile Layers** näkymään. Tältä sivulta voit myös esikatsella tiilitettyjä karttapalveluita.
-
-**Preview**-sarakkeen alta valikosta löytyy kyseiselle tasolle saatavilla olevat tiilitysvaihtoehdot. Saat aikaiseksi saman esikatselun kuin käyttäessäsi GeoWebCache:n näkymää.
-
-**Actions**-sarakkeen alta löytyy vielä linkki **Seed/Truncate**, jolla pääse GeoWebCache:n tasojen esitiilittämiseen. **Empty**-linkillä tyhjennetään kaikki tasolle aiemmin tallennetut karttatiilet. ![](img/harjoitus_9/image8.png)
-
-Valitse nyt **Seed/Truncate** -linkki Helsingin ilmakuvien tason karttatiilien luomista varten.
-
-**GeoWebCache**-näkymässä sivun yläosasta löytyy yleisiä toimintoja ja lista meneillään olevista tehtävistä. Karttatiilien luominen on hyvin resurssi-intensiivinen ja kohtuullisia levytiloja vaativa prosessi. On myös tyypillistä, että tehtävien eli karttatiilien luominen voi kestää hyvinkin pitkään (tunteja, jopa päiviä). Sivun tiedot päivitetään käyttämällä **Refresh list** -toimintoa. ![](img/harjoitus_9/image9.png)
-
-Tiilien luomista varten asetukset löytyvät sivun alapuolelta **Create a new task** -osiosta.
-
-+----------------------------+----------------------------------------------------------------------------------------------+
-| **Number of tasks to use** | Määrittää kuinka monta prosessia käynnistetään karttatiilien luomiseksi                      |
-+----------------------------+----------------------------------------------------------------------------------------------+
-| **Type of operation**      | Tiilien luomisen toimintotapa                                                                |
-|                            |                                                                                              |
-|                            | Reseed: luodaan kaikki karttatiilet, korvataan vanhat karttatiilet                           |
-|                            |                                                                                              |
-|                            | Seed: luodaan vain puuttuvat karttatiilet                                                    |
-|                            |                                                                                              |
-|                            | Truncate: poistetaan karttatiilet palvelimesta                                               |
-+----------------------------+----------------------------------------------------------------------------------------------+
-| **Grid set**               | Määrittää mille karttatiiliruudukolle luodaan karttatiilet                                   |
-+----------------------------+----------------------------------------------------------------------------------------------+
-| **Format**                 | Karttakuvan tiedostomuoto (esim. jpg, png)                                                   |
-+----------------------------+----------------------------------------------------------------------------------------------+
-| **Zoom start, Zoom stop**  | Mittakaavavälit luotavalle karttatiilille (mittakaavat on määritelty karttatiiliruudukoille) |
-+----------------------------+----------------------------------------------------------------------------------------------+
-| **Bounding box**           | Sijainnin suorakaiderajaus, jolta karttatiilet luodaan                                       |
-+----------------------------+----------------------------------------------------------------------------------------------+
-
-Aseta **Number of tasks to use** -asetukseksi 1.
+Scroll down to the bottom of this view again, and you will see in the **Available gridsets** section that two different map tile grids are enabled by default: **EPSG:4326** (WGS 84) and **EPSG:900913** (Google Mercator): ![](img/harjoitus_9/image7.png)
 
 ::: hint-box
-Psst! 2\*tietokoneen_suorittimien_lukumäärä on hyvä lähtökohta kokeilulle.
+Psst! You can also edit layer-specific tiling settings via the Data → Layers view by selecting a layer and then the Tile Caching tab.
 :::
 
-Aseta tehtävän asetukset seuraavalla tavalla, huomaa erityisesti **Zoom stop** -asetus. Laita arvoksi 15, niin lasketaan valmiiksi mittakaavatasot 0-15:
+## **Pre-creation of map tiles**
 
-Paina **Submit**.
+Return to **Tile Caching → Tile Layers** view. From this page you can also preview the tiled map services.
 
-GeoServer (GeoWebCache) muodostaa nyt karttatiilet valitusta palvelusta mittakaavatasoista 0--15.
+Under the **Preview** column, the menu will list the available tiling options for that layer. You will get the same preview as when using the GeoWebCache view.
 
-Muodostamisen ajan käyttöliittymässä voi seurata karttatiilien valmistumista:
+Under the **Actions** column, there is also a link **Seed/Truncate** to access the GeoWebCache tier pre-tiling. The **Empty** link clears all map tiles previously saved on the layer.![](img/harjoitus_9/image8.2.png)
 
-Paina **Refresh list** -linkkiä, kun haluat päivittää tiedot laskennan etenemisestä.
+Now select the **Seed/Truncate** link to create Helsinki aerial image layer map tiles.
 
-Karttatiiliruudukon määritelmä ja tason sijainnin rajauksen mukaan mittakaavoille 0-15 tarvitaan 1 922 karttatiiltä. Kuvien piirtäminen kestää etäpalvelimella näillä asetuksilla minuutin verran.\
-![](img/harjoitus_9/image10.png)
+In the **GeoWebCache** view at the top of the page you will find general functions and a list of ongoing tasks. Creating map tiles is a very resource-intensive process and requires a reasonable amount of disk space. It is also typical that the creation of tasks, i.e. map tiles, can take a very long time (hours, even days). The information on a page is updated using the **Refresh list** function. ![](img/harjoitus_9/image9.2.png)
 
-Huomaa, että karttatiilet luodaan oletuksena tason sijainnin rajauksen mukaisesti (ellei sitä toisin ole määritelty). ![](img/harjoitus_9/image11.png)
+For creating tiles, the settings can be found at the bottom of the page in the **Create a new task** section.
 
-Laske vielä karttatiilet **tasolle 16** (määrittele zoomaus aloitus- ja lopputasoksi 16). Päivitä laskennan aikana sivua ja tutki karttatiilien luomisen etenemistä.\
-![](img/harjoitus_9/image12.png)
+|                                                                                            |                                                                                                                                                                                                                                             |
+|--------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Number of tasks to use** \| Specifies how many processes to start to create map tiles \| |                                                                                                                                                                                                                                             |
+|                                                                                            | **Type of operation** \| Type of operation for creating tiles \| \| \| \| Reseed: create all map tiles, replace old map tiles \| \| \| \| Seed: create only the missing map tiles \| \| \| \| Truncate: remove map tiles from the server \| |
+| **Grid set**                                                                               | Specifies which map tiles are created on which map tiles grid \|                                                                                                                                                                            |
+| **Format**                                                                                 | Map image file format (e.g. jpg, png) \|                                                                                                                                                                                                    |
+| **Zoom start, Zoom stop**                                                                  | Scale intervals for the map tiles to be created (scales are defined for the map tiles) \|                                                                                                                                                   |
+| **Bounding box**                                                                           | The rectangular delineation of the location from which the map tiles are generated                                                                                                                                                          |
 
-Jos erehdyt määrittelemään vääriä asetuksia, voit pysäyttää laskennan käyttämällä **Kill all Tasks...** -toimintoa painamalla **Submit**-näppäintä. ![](img/harjoitus_9/image13.png)
-
-Taso 16 vastaa mittakaavaa 1:4 262. Kaikkiaan sen tiilittämiseen tarvitaan 3 700 karttatiiliä, joiden luomiseen menee noin pari minuuttia. Laske vielä taso 17 samalla tavalla ja kirjoita muistiinpanot prosessorimäärästä, karttatiilistä sekä ajasta.
-
-Taso 17 näyttää kartalla tältä: ![](img/harjoitus_9/image14.png)
-
-## **Karttatiilien kovalevyn käyttö**
-
-Edellisessä kohdassa laskettiin karttatiiliä vain yhdelle tasolle (**ilmakuvat_keskusta**), vain yhteen karttatiiliruudukkoon (**EPSG:4326**) ja vain yhdelle kuvaformaatille (**png**). Tämän karttatason mittakaavatason 16 karttatiilet vievät noin 300 MB levytilaa.
-
-Karttatasoilla saattaa olla useita karttatiilipalveluita riippuen siitä, kuinka monta karttatiiliruudukkoa ja kuvatyyppiä on tason tiilitysasetuksissa määritelty.
-
-Karttatiilien luominen kannattaa suunnitella etukäteen ja toteuttaa huolellisesti. Yksi tärkeä asetus karttatiilipalveluissa on karttatiilien kovalevyn käytön tarkkaileminen ja hallinnointi. Siihen on GeoWebCache:ssa erilaisia asetuksia ja osaa niistä voi säätää suoraan GeoServeristä.
-
-Avaa **Tile Caching → Tile Layers** -näkymästä **ilmakuvat_keskusta** tason asetukset. Avaa vielä **Tile Caching** välilehti.
-
-Sivun asetuksista voit tarkistaa, että sekä **jpeg**- että **png**-kuvaformaatit ovat rastitettuina. Sen lisäksi on määritelty **kaksi eri karttatiiliruudukkoa** käytettäväksi. Tämä tarkoittaa sitä, että tämä taso on saatavilla kuudella eri karttatiilitasolla. Äskettäin laskettiin valmiiksi karttatiiliä vain yhdelle.
-
-Voit tarkistaa kovalevyn käytön tasokohtaisesti **Tile Caching → Tile Layers** -näkymästä. Huomaa kuitenkin, että oletusasetuksilla tämä tieto ei ole saatavilla (**N/A**). ![](img/harjoitus_9/image15.png)
-
-Tiedon näkymiseksi pitää ensin määrittää, kuinka paljon kovalevytilaa karttatiilipalvelulla on lupa käyttää. Oletuksena GeoWebCache voi käyttää koko palvelimen levytilan.
-
-Palataan hetkeksi takaisin näkymään **Tile Caching** → **Disk Quota**. Rastita siellä **Enable disk quota** ja määrittele vielä **Maximum tile cache size** -arvoksi **2 GiB**. ![](img/harjoitus_9/image16.png)
-
-Paina lopulta **Submit**, niin asetukset tulevat tallennetuksi.
+Set **Number of tasks to use** to 1.
 
 ::: hint-box
-Psst! Käyttöliittymässä käytetään lyhenteitä GiB ja GB. Niiden ero tulee siitä, että GiB (Gibibyte) on binäärijärjestelmä monikerta kun GB (Gigabyte) on kymmenjärjestelmä monikerta: GiB on 1024 MiB ja tavuina 230 tavua → eli 1 073 741 824 tavua GB on 1000 MB ja tavuina 109 tavua → eli 1 000 000 000 tavua
+Psst! 2\*number_of_computer_processors is a good starting point for experimentation.
 :::
 
-Huomaa vielä, että **When enforcing disk quota limits, remove tiles that are** -asetus tarkoittaa se, että GeoServer/GeoWebCache ei lopeta karttatiilien luomista, vaikka määritelty maksimi-karttatiilien levykäyttö saavutettaisiin. Sallitun levytilan täyttymisen jälkeen palvelin alkaa poistaa automaattisesti joko vähiten tai pitkän aikaan käyttämättä olleita karttatiiliä. Karttatiiliä tuotetaan siis jatkuvasti, vaikka maksimilevytilan raja tulisikin täyteen.
+Set the task settings as follows, paying particular attention to the **Zoom stop** setting. Set the value to 15 to calculate the scale levels 0-15:
 
-Paina **Submit** ja palaa **Tile Caching → Tile Layers -**näkymään.
+Press **Submit**.
 
-Tarkista, että nyt **Disk Used** -sarakkeessa näkyy tarvittavat tiedot. Ilmakuvien karttatiilet vievät tällä hetkellä alle 500 megatavua. Muut tasot eivät käytä yhtään levytilaa. ![](img/harjoitus_9/image17.png)
+GeoServer (GeoWebCache) will now generate map tiles of the selected service from scale levels 0--15..
 
-Karttatiilet tulevat myös tallennetuksi automaattisesti aina karttatiilipalvelun luodessa karttatiiliä. Kokeile esikatsella eri tasojen karttatiilitasoja (**Tile Caching** → **Tile Layers** → **Preview**). Esimerkiksi rakennukset- ja taustakartta-tasoja. ![](img/harjoitus_9/image18.png)
+During the generation process, the interface allows you to monitor the completion of the map tiles:
 
-Voidaan todeta, että sen jälkeen myös niiden kohdalla **Disk Used** -sarakkeessa on tietoa levytilan käytöstä. Niiden levytilan käyttö kasvaa sitä mukaan kun eri kartta-alueita ja tiilitasoja käytetään. ![](img/harjoitus_9/image19.png)
+Click on the **Refresh list** link to refresh information on the progress of the calculation.
 
-Edellisessä kohdassa laskettiin muutama karttatiilitasoja. Esimerkiksi Helsingin ilmakuvien mittakaavatason 16 karttatiilet vievät levytilaa reilut 300 megatavua.
+The map tile grid definition and the layer position delimitation indicate that 1 922 map tiles are required for scales 0-15. With these settings, it takes about a minute to draw the images on the remote server. ![](img/harjoitus_9/image10.png)
 
-Tasojen käyttämää levytilaa voidaan myös vapauttaa. Voit halutessasi tyhjentää tietyn tason kaikki karttatiilet käyttäen tason **Empty**-linkkiä. Kokeile tyhjentää **hki-rakennukset**-tason karttatiilet.
+Note that map tiles are created by default according to the boundary of the layer location (unless otherwise specified). ![](img/harjoitus_9/image11.2.png)
 
-On mahdollista myös tyhjentää ainoastaan tietyn mittakaavan karttatiilet GeoWebCache-käyttöliittymällä: 
+Calculate further map tiles **for level 16** (specify zooming start and end level as 16). During the calculation, refresh the page and check the progress of the map tiles creation. ![](img/harjoitus_9/image12.png)
 
--   Avaa **ilmakuvat_keskusta**-tason oikealta **Seed/Truncate** ja valitse mittakaavataso 17 alku- ja loppumittakaavaksi.
+If you make a mistake and specify the wrong settings, you can stop the calculation by using the **Kill all Tasks...** function by pressing the **Submit** key. ![](img/harjoitus_9/image13.2.png)
 
--   Valitse toiminnoksi **Truncate** ja lopuksi **Submit**. Tällä tavalla poistat palvelimesta kaikki mittakaavatason 17 karttatiiltä.
+Level 16 corresponds to a scale of 1:4 262. In total, 3 700 map tiles are needed to tile it, which takes about a couple of minutes to create. Calculate level 17 in the same way and make notes of the number of processors, map tiles and time.
 
--   Voit tarkistaa **Tile Layers** -näkymästä **ilmakuvat_keskusta**-tason nykyisen kovalevyn käytön.
+Level 17 looks like this on the map: ![](img/harjoitus_9/image14.2.png)
+
+## **Using the hard disk of the map tiles**
+
+In the previous section, the map tiles were computed for only one layer (**Aerialimages_ofthecitycentre**), only one map tile grid (**EPSG:4326**) and only one image format (**png**). Map tiles at scale level 16 of this map layer take up about 300 MB of disk space.
+
+Map layers may have multiple map tile services depending on the number of map tile grids and image types defined in the layer's style settings.
+
+The creation of map tiles should be planned in advance and carried out carefully. One important setting in the map tile service is to monitor and manage the use of the map tile hard disk. GeoWebCache has various settings for this and some of them can be configured directly from GeoServer.
+
+From the **Tile Caching → Tile Layers** view, open the **Aerialimages_ofthecitycentre** layer settings. Open the **Tile Caching** tab again.
+
+In the page settings, you can check that both **jpeg** and **png** image formats are checked. In addition, **two different map tiles** are defined for use. This means that this layer is available in six different map tile levels. Recently, the map tiles were calculated for only one level.
+
+You can check the hard disk usage per layer in the **Tile Caching → Tile Layers** view. Note, however, that with default settings this information is not available (**N/A**). ![](img/harjoitus_9/image15.2.png)
+
+To see the data, you must first specify how much hard disk space the map tile service is allowed to use. By default, GeoWebCache can use the entire disk space of the server.
+
+Go back to **Tile Caching** → **Disk Quota** for a moment, check **Enable disk quota** and set **Maximum tile cache size** to **2 GiB**. ![](img/harjoitus_9/image16.2.png)
+
+Finally, press **Submit** to save the settings.
 
 ::: hint-box
-Psst! Helsingin ilmakuvien mittakaavataso 17 vaatii 1,4 GB.
+Psst! The abbreviations GiB and GB are used in the interface. The difference comes from the fact that GiB (Gibibyte) is a binary system multiple while GB (Gigabyte) is a decimal system multiple: GiB is 1024 MiB and 230 bytes → 1 073 741 824 bytes GB is 1000 MB and 109 bytes → 1 000 000 000 000 bytes.
 :::
 
-## **Karttatiiliruudukot**
+Note also that the **When enforcing disk quota limits, remove tiles that are** option means that GeoServer/GeoWebCache will not stop creating map tiles even if the specified maximum disk usage for map tiles is reached. After the allowed disk space has been filled, the server will automatically start removing either the least used or the longest unused map tiles. This means that map tiles are continuously generated even if the maximum disk space limit is reached.
 
-GeoServerin oletusasennuksesta löytyy muutama valmiiksi määritelty karttatiiliruudukko. Nämä ruudukot ovat joko WGS 84 tai Web Mercator -koordinaattijärjestelmässä.
+Press **Submit** and return to **Tile Caching → Tile Layers** view.
 
-Avaa **Tile Caching → Gridsets** ja paina sitten **EPSG:4326** -nimistä ruudukkoa. ![](img/harjoitus_9/image20.png)
+Check that the **Disk Used** column now shows the necessary information. Aerial image tiles currently take up less than 500 megabytes. Other layers do not use any disk space. ![](img/harjoitus_9/image17.2.png)
 
-Karttatiiliruudukon määritelmiin kuuluvat muun muassa:
+Map tiles are also automatically saved each time a map tile is created by the map tile service. Try to preview the map tile layers of different layers (**Tile Caching** → **Tile Layers** → **Preview**). For example, buildings and background map layers. ![](img/harjoitus_9/image18.2.png)
 
-+---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Coordinate Reference System** | Koordinaattijärjestelmä, jolla ruudukot määritellään.\                                                                                                          |
-+---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Gridset bounds**              | Karttalehtijaon sijainnin rajaus, jolla määritetään, mille sijainnille karttatiiliruudukko on rajattu.                                                          |
-+---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Tile Matrix Set**             | Karttatiilimalli (kuvapyramidi), jolla määritellään karttatiiliruudukolle valitut mittakaavat. Tämä voidaan määritellä joko resoluution tai mittakaavan mukaan. |
-+---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+It can be noted that the **Disk Used** column then also contains information about disk space usage. Their disk space usage increases as different map areas and tile levels are used. ![](img/harjoitus_9/image19.2.png)
 
-Karttatiiliruudukkoja voi myös laatia omiin tarpeisiin.
+In the previous section, a few map tile layers were calculated. For example, the map tiles for Helsinki aerial photos at scale level 16 take up over 300 megabytes of disk space.
 
-## **JHS180 mukainen karttatiiliruudukko**
+The disk space used by the layers can also be freed up. If you wish, you can empty all map tiles on a particular layer using the **Empty** link on the layer. Try emptying the map tiles of the **hki-buildings** layer.
 
-JHS180 suosituksesta löytyy muun muassa suositus kansallisesta karttatiiliruudukosta, joka perustuu OGC-standardien määrittelyihin. Suosituksesta löytyy muun muassa seuraavat määritelmät:
+It is also possible to clear only map tiles of a certain scale using the GeoWebCache interface:
 
-+------------------------------+----------------------------------------------------------------------------------------------------------------+
-| **Rajapintastandardi**       | OGC:n WMS-T standardi                                                                                          |
-+------------------------------+----------------------------------------------------------------------------------------------------------------+
-| **Koordinaattijärjestelmä**  | ETRS89 / TM35-FIN (EPSG:3067)                                                                                  |
-+------------------------------+----------------------------------------------------------------------------------------------------------------+
-| **Käytettävä origo**         | Itä -548 576 m, pohjoinen 8 388 608 m (tiilien ankkuripiste on vasen yläkulma)                                 |
-+------------------------------+----------------------------------------------------------------------------------------------------------------+
-| **Resoluutiotasot**          | 0.25 m, 0.5 m, 1 m, 2 m, 4 m, 8 m, 16 m, 32 m, 64 m, 128 m, 256 m, 512 m, 1 024 m, 2 048 m, 4 096 m ja 8 192 m |
-+------------------------------+----------------------------------------------------------------------------------------------------------------+
-| **Tiilien koko pikseleissä** | 256\*256 pikseliä                                                                                              |
-+------------------------------+----------------------------------------------------------------------------------------------------------------+
-| **Kuvaformaatti**            | Image/png                                                                                                      |
-+------------------------------+----------------------------------------------------------------------------------------------------------------+
+-   Open **Seed/Truncate** from the right of the **aerialimages_ofthecitycentre** layer and select scale layer 17 as the start and end scale.
 
-Näillä määritelmillä, karkeimmalla resoluutiotasolla (taso 0) on vain yksi tiilikuva kooltaan 2 097 152 m \* 2 097 152 m (8 192\*8 192 pikseliä). Tämän kuvatiilen pohjois-etelä -suuntainen keskilinja sijoittuu projektiokaistan keskimeridiaanille (27 astetta). Ja tiilen pohjoisreunan pohjoiskoordinaatti on tiilen koon monikerta päiväntasaajalta laskien (4 \* 2 097 152).
+-   Select **Truncate** as the action and finally press **Submit**. In this way you will remove all scale 17 map tiles from the server.
 
-Seuraava taso (taso 1) muodostuu jakamalla 0 tason ainoa tiili neljään yhtä suureen osaan. Ja niin edelleen muodostuvat seuraavat tasot, taso 15 asti. Katso tarkemmin luentomateriaalista.
+-   In the **Tile Layers** view, you can check the current hard disk usage of the **aerialimages_ofthecitycentre** layer.
 
-## **Uuden karttatiiliruudukon luominen**
+::: hint-box
+Psst! Helsinki aerial photos at scale 17 require 1.4 GB.
+:::
 
-Luodaan GeoServerin palvelimelle uusi karttatiiliruudukko JHS180-suositusten mukaisesti.
+## **Map tile grids**
 
-Valitse **Tile caching → Gridset** päävalikosta ja luo uusi karttatiiliruudukko painamalla **Create a new gridset**.
+In the default GeoServer installation you will find a few predefined mapping grids. These grids are either in the WGS 84 or Web Mercator coordinate system.
 
-Anna nimeksi esimerkiksi **JHS180_EPSG3067** ja kirjoita lyhyt määritelmä ruudukosta.
+Open **Tile Caching → Gridsets** and then click on the grid named **EPSG:4326**. ![](img/harjoitus_9/image20.png)
 
-Valitse **Coordinate Reference System** -arvoksi **EPSG 3067**.
+Definitions of the map tile grid include:
 
-Määrittele vielä ruudukon kattavuus aiemmin mainituilla JHS180 suosituksella, eli karkeamman tason kattavuus.
+|                                 |                                                                                                                                                   |
+|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Coordinate Reference System** | The coordinate system used to define the grids.  \|                                                                                               |
+| **Gridset bounds**              | The location delimiter for the map sheet layer, which specifies the location to which the map tile grid is delimited.                             |
+| **Tile Matrix Set**             | A map tile model (image pyramid) that defines the scales selected for the map tile grid. This can be defined either by resolution or by scale. \| |
 
-Suosituksissa sanotaan, että vasemman yläkulman koordinaatit (origo) ovat itäkoordinaatti **-548 576** m ja pohjoiskoordinaatti **8 388 608** m. Näitä vastaavat **Min X** ja **Max Y** koordinaatit. Karkeamman tason koko metreinä on 2097152 \* 2097152 joten:
+You can also create map tiles to suit your own needs.
 
-**Max X** on sitten: -548576 + 2097152 = **1 548 576** m
+## **Map tile grid according to JHS180**
 
-**Min Y** on sitten: 8388608 -- 2097152 = **6 291 456** m
+The JHS180 Recommendation includes a recommendation for a national map tile grid based on the OGC standards specifications. Among others, the following definitions can be found in the recommendation:
 
-+------------------------------------------------------------------------------------------+
-| **  JHS180-mukaisen ruudukon kattavuus**                                                 |
-+=================================================+========================================+
-| Min X: -548 576 m                               | Max X: 1 548 576 m                     |
-+-------------------------------------------------+----------------------------------------+
-| Min Y: 6 291 456 m                              | Max Y: 8 388 608 m                     |
-+-------------------------------------------------+----------------------------------------+
+|                                                                                                                                            |                         |
+|--------------------------------------------------------------------------------------------------------------------------------------------|-------------------------|
+| **Interface standard**                                                                                                                     | OGC's WMS-T standard \| |
+| **Coordinate reference system** \| ETRS89 / TM35-FIN (EPSG:3067)                                                                           |                         |
+| **Usable origo** \| East -548 576 m, North 8 388 608 m (anchor point of tiles is upper left corner) \|                                     |                         |
+| **Resolution levels** \| 0.25 m, 0.5 m, 1 m, 2 m, 4 m, 8 m, 16 m, 32 m, 64 m, 128 m, 256 m, 512 m, 1 024 m, 2 048 m, 4 096 m ja 8 192 m \| |                         |
+| **Size of tiles in pixels** \| 256\*256 pixels \|                                                                                          |                         |
+| **Image format** \| Image/png \|                                                                                                           |                         |
 
-Pidä tiilen pikselikoko oletuksena, **256** px.
+With these definitions, at the coarsest resolution level (level 0) there is only one tile image of size 2 097 152 m \* 2 097 152 m (8 192\*8 192 pixels). The north-south centreline of this image file lies on the centreline of the projection strip (27 degrees). And the north coordinate of the northern edge of the tile is a multiple of the size of the tile from the equator (4 \* 2 097 152).
 
-Samat arvot löydät suosituksen mukaisesta tiiliruudukosta.
+The next level (level 1) is formed by dividing the only tile in level 0 into four equal parts. And so on through the following levels, up to level 15. See the lecture material for more details.
+
+## **Creating a new gridset**
+
+Create a new mapping grid on the GeoServer server according to the JHS180 recommendations.
+
+Select **Tile caching → Gridset** from the main menu and create a new gridset by pressing **Create a new gridset**.
+
+Enter a name such as **JHS180_EPSG3067** and enter a short definition of the gridset.
+
+Select **EPSG 3067** as **Coordinate Reference System**.
+
+Finally, define the coverage of the grid using the JHS180 recommendation mentioned earlier, i.e. a coarser level of coverage.
+
+The recommendations say that the coordinates of the upper left corner (origo) are the east coordinate **-548 576** m and the north coordinate **8 388 608** m. These correspond to the coordinates **Min X** and **Max Y**. The size of the coarser level in metres is 2097152 \* 2097152:
+
+**Max X** is then: -548576 + 2097152 = **1 548 576** m
+
+**Max Y** is then: 8388608 -- 2097152 = **6 291 456** m
+
+|                    | **Coverage of the JHS180 grid** \| |
+|--------------------|------------------------------------|
+| Min X: -548 576 m  | Max X: 1 548 576 m                 |
+| Min Y: 6 291 456 m | Max Y: 8 388 608 m                 |
+
+Keep the default pixel size of the tile, **256** px.
+
+The same values can be found in the recommended tile grid.
 
 ![](img/harjoitus_9/image21.png)
 
-Täytä karttatiiliruudukon tiedot yllä mainituilla arvoilla, kuitenkin siten, että et käytä välilyöntejä koordinaatteja kirjoittaessasi.
+Fill in the map tile grid with the above values, but make sure that you do not use spaces when entering the coordinates.
 
-Määritellään seuraavaksi resoluutiotasot. **Tile Matrix Set** -asetuksissa voit määritellä JHS180 suosituksessa mainitut **resoluutiotasot**.
+Next, let's define the resolution levels. In the **Tile Matrix Set** settings, you can specify the **resolution levels** mentioned in the JHS180 recommendation.
 
-Pidä valittuna **Resolutions**. Aloita määrittelemällä taso 0. ![](img/harjoitus_9/image22.png)
+Keep **Resolutions** selected. Start by specifying level 0. ![](img/harjoitus_9/image22.png)
 
-Paina **Add zoom level** ja huomaa, että **Pixel Size** -arvoksi tulee **8 192** (pilkut numeroissa johtuvat englannin numeroformaatista), joka on juuri suosituksessa mainittu kuvatiilen pikselikoko tällä tasolla. Huomaa, että **Scale**-arvo täyttyy myös automaattisesti.
+Press **Add zoom level** and notice that **Pixel Size** is set to **8 192** (the commas in the numbers are due to the English number format), which is the exact pixel size of the image tile at this level as recommended. Note that the **Scale** value is also filled in automatically.
 
-Kun painat uudelleen **Add zoom level**, uuden tason **Pixel Size** -arvo tulee automaattisesti puoleksi edellisen tason pikselikoosta, eli 4 096.
+When you press **Add zoom level** again, the **Pixel Size** of the new level will automatically be half the pixel size of the previous level, i.e. 4 096.
 
-Luo loput resoluutiotasot (tasolle 15 asti) samalla tavalla.
+Create the remaining resolution levels (up to level 15) in the same way.
 
-**Tiles**-kohdalta voit tarkista kuinka monta tiiliä tarvitaan jokaisen tason puolelta.
+Under **Tiles** you can check how many tiles are needed on each side of each layer.
 
-Paina lopulta **Save**, niin uusi JHS180-karttatiiliruudukko on käytettävissä palvelimessasi.\
-![](img/harjoitus_9/image23.png)
+Finally, press **Save** to make the new JHS180 mapping grid available on your server.\
+![](img/harjoitus_9/image23.2.png)
 
-## **Suomen OpenStreetMap-tiestö**
+## **Finland's OpenStreetMap road network**
 
-Äskettäin luomamme karttatiiliruudukko soveltuu aineistoihin, jotka kattavat koko Suomen.
+Our newly created gridset is suitable for data covering the whole of Finland.
 
-Aiemmissa harjoituksissa olet harjoitellut aineistojen käyttöönottoa GeoServerissä. Samasta jo aiemmin käytetystä **gs_training** PostGIS-tietokannasta löytyy Suomen OpenStreetMap-tiestöaineisto **EPSG 3067** -koordinaattijärjestelmässä.
+In previous exercises you have practiced deploying the data in GeoServer. The same **gs_training** PostGIS database already used in the past contains the Finnish OpenStreetMap road data in the **EPSG 3067** coordinate system.
 
-Luo uusi taso tiestö-aineistosta. Suomen aineisto löytyy tietokannasta **suomi**-skeemasta nimellä **osm-tiet**.
+Create a new layer of road data. The Finnish data can be found in the database under **suomi**-scheme as **osm-tiet**.
 
 ::: hint-box
-Psst! Muista, että ensin luodaan store, josta luodaan viittaus edellä mainittuun skeemaan ja sen jälkeen voidaan lisätä tasoja GeoServer-palvelimelle.
+Psst! Remember, first create a store to reference the above schema and then you can add layers to the GeoServer server.
 :::
 
-**Voit katsoa ohjeita paikkatietokannat-harjoituksesta**, jossa lisättiin aineistoja GeoServeriin PostGIS-paikkatietokannasta. Voit myös kysyä tarvittaessa kouluttajalta.
+**You can look at the instructions from the spatial databases exercise**, which added data to GeoServer from the PostGIS spatial database. You can also ask the trainer if necessary.
 
-Luo workspace, anna sille nimeksi **suomi**.
+Create a workspace, name it **suomi**.
 
-Luo PostGIS-store, laita se suomi-workspaceen ja nimeä se **suomi_tiesto_3067**:ksi (tietokannan nimi on **gs_training**, skeema on **suomi**, käyttäjä on **postgres** ja salasana on **gispo**).
+Create a PostGIS store, put it in the suomi workspace and name it **suomi_roads_3067** (the database name is **gs_training**, the schema is **suomi**, the user is **postgres** and the password is **gispo**).
 
-Kyseisestä storesta löytyy ainoastaan yksi aineisto (osm-tiet). Luo siitä uusi GeoServer-taso, nimeä se **suomi_tiesto_3067**:ksi (täytä myös muuta tarvittavat tiedot).
+There is only one dataset (osm data) in this store. Create a new GeoServer layer from it, name it **suomi_roads_3067** (fill in the other necessary information).
 
-Tarpeen vaatiessa, voit katsoa mallia alla olevasta kuvakaappauksesta PostGIS-storen luomisesta:\
+If needed, you can see a sample screenshot of the PostGIS store creation below:\
 ![](img/harjoitus_9/image24.png) ![](img/harjoitus_9/image25.png)
 
-## **Oman karttatiiliruudukon käyttöönotto**
+## **Using your own map tile grid**
 
-Avaa **Tile Caching → Tile Layers** ja paina **suomi_tiesto_3067** -linkkiä. Avaa vielä **Tile Caching** -välilehti ja selaa sivun loppuun, josta löydät karttatiiliruudukko-asetukset.
+Open **Tile Caching → Tile Layers** and press the **suomi_roads_3067** link. Open the **Tile Caching** tab again and scroll to the bottom of the page where you will find the map tile grid settings.
 
-Valitse **Available gridsets** -osion alta **Add grid subset** -kohdasta uusi **JHS180_EPSG3067**-karttatiiliruudukko. Paina vielä **plus**-kuvaketta.
+Under **Available gridsets**, select a new **JHS180_EPSG3067** map tile grid from **Add grid subset**. Press the **plus** icon again.
 
-Tarvittaessa voit määritellä, mitkä zoomaus-tasot ovat käytettävissä tai mitkä tallentuvat välimuistiin käyttäen **Published**- ja **Cached zoom levels -asetuksia**.
+If required, you can specify which zoom levels are available or which are cached using the **Published** and **Cached zoom levels** options.
 
-Paina lopulta **Save**. ![](img/harjoitus_9/image26.png)
+Then press **Save**. ![](img/harjoitus_9/image26.png)
 
-Esikatsele nyt **suomi_tiesto_3067** uudella karttatiiliruudukolla näkymästä **Tile Caching → Tile Layers**. Valitse tiestötason kohdalla **JHS180_EPSG3067/png**. 
+Now preview **suomi_roads_3067** in the new map tile grid from **Tile Caching → Tile Layers**. Select **JHS180_EPSG3067/png** for the road layer.
 
-Esikatselussa on käytössä luomasi EPSG:3067 karttatiiliruudukko (alla huomataan, kuinka käytössä ovat karttatiilet, ja kuinka Etelä-Suomea kohti mentäessä karttatiilet eivät vielä ole ehtineet renderöitymään ruudulle näytönkaappauksen ottohetkeen mennessä):
+In the preview, the EPSG:3067 map tile grid you created is in use (note below how the map tiles are in use, and how as you move towards Southern Finland the map tiles have not yet had time to render to the screen by the time the screenshot is taken):
 
 ![](img/harjoitus_9/image27.png)
 
 \
 ![](img/harjoitus_9/image28.png)
 
-## **Paikallisen karttatiiliruudukon muodostaminen**
+## **Create a local map tile grid**
 
-Geoserveriin voidaan muodostaa tarpeiden mukaan hyvin monenlaisia karttatiiliruudukoita. Joissakin tapauksissa voi olla tarpeen luoda oma paikallinen karttatiiliruudukko. Paikallisen karttatiiliruudukko voi olla tarpeellinen, jos karttatiilipalvelulle on runsaasti käyttöä ja aineistoihin halutaan yhdistää paikallisessa koordinaattijärjestelmässä olevia tietoaineistoja (vektori- tai rasteriaineistoja).
+A wide range of map tile grid types can be created on the geoserver, depending on your needs. In some cases it may be necessary to create your own local map tile grid. A local map tile grid may be necessary if there is a high usage of the map tile service and the data needs to be combined with data sets (vector or raster data) in the local coordinate system.
 
-Luodaan nyt Helsingin alueelle oma karttatiiliruudukko, joka käyttää **ETRS89 / GK25FIN (EPSG:3879)** -koordinaattijärjestelmää. Määritellään resoluutiotasot mittakaavan mukaan.
+Now let's create a separate map tile grid for the Helsinki area using the **ETRS89 / GK25FIN (EPSG:3879)** coordinate system. Define resolution levels according to scale.
 
-Palaa **Tile Caching** → **Gridsets**-näkymään ja paina **Create a new gridset** -toimintoa. Nimeä uusi karttatiiliruudukko **HKI-GK25FIN**-nimellä.
+Return to **Tile Caching** → **Gridsets** view and press **Create a new gridset**. Name the new gridset **HKI-GK25FIN**.
 
-Määrittele sitten **EPSG:3879** koordinaattijärjestelmäksi ja paina vielä **Compute from maximum extent of CRS**.
+Then specify **EPSG:3879** as the coordinate system and press **Compute from maximum extent of CRS**.
 
-Rastita **Tile Matrix Set** -osion alta **Scale denominators** ja lisää kymmenen karttatiilitasoa (tasot 0-9) painamalla **Add zoom level**. ![](img/harjoitus_9/image29.png)
+Under **Tile Matrix Set**, check **Scale denominators** and add ten map tile levels (levels 0-9) by pressing **Add zoom level**. ![](img/harjoitus_9/image29.png)
 
-Määrittele ensimmäisen tason mittakaava käsin **Scale**-sarakkeessa, anna arvoksi 500 000. Määrittele loput: 250 000, 100 000, 50 000, 20 000, 10 000, 5 000, 2 500, 1 000 ja 500 . ![](img/harjoitus_9/image30.png)
+Define the scale of the first level manually in the **Scale** column, enter 500 000. Define the rest: 250 000, 100 000, 50 000, 20 000, 10 000, 5 000, 2 500, 1 000 and 500 . ![](img/harjoitus_9/image30.2.png)
 
-Paina lopussa **Save**.
+Press **Save** at the end.
 
-Ota uusi karttatiiliruudukko käyttöön samalla tavalla kuin aiemmin.
+Enable the new map grid in the same way as before.
 
-Avaa **Tile Caching → Tile Layers → taustakartta → Tile Caching**. Ryhmätasoillekin voidaan määritellä karttaruudukkoja.
+Open **Tile Caching → Tile Layers → background map → Tile Caching**. You can also define map grids for group layers.
 
-Selaa sivun loppuun, josta löydät tiilitysasetukset.
+Scroll to the bottom of the page to find the tiling options.
 
-Valitse **Available gridsets** -osion alta **Add grid subsret** -kohdasta uusi **HKI_GK25FIN**-karttatiiliruudukko. Paina vielä **plus**-kuvaketta.
+Under the **Available gridsets** section, select **Add grid subsret** to add a new **HKI_GK25FIN** map tile grid. Press the **plus** icon again.
 
-Paina lopulta **Save**.
+Finally, press **Save**.
 
-Näkymästä **Tile Caching → Tile Layers**, esikatsele nyt **ortokartta** uudella karttatiiliruudukolla (valitse esimerkiksi **HKI_GK25FIN/jpeg**). Huomaa, että mittakaavatasoja on vain kymmenen ja ne vastaavat karttatiiliruudukon asetuksissa määriteltyjä mittakaavoja. ![](img/harjoitus_9/image31.png)
+From the **Tile Caching → Tile Layers** view, now preview the **orto map** with the new map tile grid (for example, select **HKI_GK25FIN/jpeg**). Note that there are only ten scale levels and they correspond to the scales defined in the map tile grid settings. ![](img/harjoitus_9/image31.2.png)

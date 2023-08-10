@@ -1,119 +1,119 @@
-# HARJOITUS 2.3: ARKKITEHTUURI JA KÄYTTÖÖNOTTO
+# EXERCISE 2.3: ARCHITECTURE AND DEPLOYMENT
 
-**Harjoituksen sisältö**
+**Content of the exercise**
 
-Harjoituksessa tutustutaan tarkemmin GeoServerin lokeihin ja erilaisiin asetuksiin, jotka vaikuttavat suorituskykyyn.
+This exercise will introduce you to the GeoServer logs and the different settings that affect performance.
 
-**Harjoituksen tavoite**
+**Aim of the exercise**
 
-Harjoituksen jälkeen opiskelija osaa arvioida GeoServerin suorituskykyä lokien avulla ja tunnistaa erilaisia ongelmatilanteita.
+After the exercise, the student will be able to evaluate GeoServer's performance using logs and identify different problem situations.
 
-**Arvioitu kesto**
+**Estimated duration**
 
-30 minuuttia.
+30 minutes.
 
-## **Valmistautuminen**
+## **Preparation**
 
-GeoServerin palvelimeen on ladattu erilaisia aineistoja ja GeoServerin **Monitor**-lisäosa on asennettu palvelimeen.
+The GeoServer server has been loaded with various data and the GeoServer **Monitor** plugin has been installed on the server.
 
-## **Yleistiedot GeoServerin palvelimesta**
+## **General information about the GeoServer server**
 
-Avaa GeoServerin vasemmasta palkista **About & Status → Server Status**. ![](img/harjoitus_10/image1.png)
+Open **About & Status → Server Status** from the left bar of GeoServer. ![](img/harjoitus_10/image1.png)
 
-**Locks**-toiminnon kautta voit tarkistaa olemassa olevat WFS-T -aineistojen lukitukset. Voit tarvittaessa vapauttaa lukitukset painamalla **Free locks**.
+The **Locks** function allows you to check existing locks on WFS-T data. If necessary, you can release the locks by pressing **Free locks**.
 
-**Connections**-tieto viittaa siihen, kuinka monta vektori-storea on saatavilla. 
+The **Connections** information refers to the number of vector stores available. 
 
-Voit tarkistaa ja vapauttaa GeoServerin käyttämää muistia **Memory Usage** kohdalla.
+You can check and release the memory used by GeoServer under **Memory Usage**.
 
-## **Image Processing -asetukset**
+## **Image Processing Settings**
 
-Tarkista vielä, mitkä Java-asetukset ovat voimassa palvelimessa kuvien käsittelyä varten. Lähtökohtaisesti ei ole kovin tehokasta käsitellä kuvia kokonaisina tietokoneen muistissa. Yleisesti käytetty tapa on jakaa kuvat pienempiin osiin (tiilet/tiles) ja tehdä mahdolliset kuvaoperaattorit pienempiin kuviin. JAI-asetukset (määritelty **Image Processing** -asetuksissa) hallinnoivat näiden menetelmien toimintaa.
+Check again which Java settings are in use on the server for image processing. By default, it is not very efficient to process images as a whole in computer memory. A commonly used method is to split images into smaller parts (tiles) and do any image operators on the smaller images. The JAI settings (defined in the **Image Processing** settings) control the operation of these methods.
 
-JAI (Java Advanced Imaging) asetuksia voit muokata **Settings → Image Processing** -näkymän kautta. ![](img/harjoitus_10/image2.png)
+You can edit the JAI (Java Advanced Imaging) settings via **Settings → Image Processing** view. ![](img/harjoitus_10/image2.png)
 
-TAULUKKO TÄHÄN DOCSISTA
+PUT A TABLE HERE FROM DOCS (?)
 
-Asetusten muutokset näkyvät **Server Status** -sivulla.
+Changes to the settings are visible in the **Server Status** page.
 
 ## **Raster Access**
 
-Toisin kuin WMS-kuvapyynnöt, WCS-pyynnöt tuottavat mahdollisesti hyvin suuria kuvatiedostoja. Näissä tapauksissa kuvien lataaminen muistista ei ole hyvä ratkaisu, vaan olisi suotavaa käyttää väliaikaista tiedostoa.
+Unlike WMS image requests, WCS requests produce potentially very large image files. In these cases, downloading images from memory is not a good solution and it would be preferable to use a temporary file.
 
-**Raster Access** -asetukset määräävät GeoServerin toimintaa kuvapyyntöjen saapuessa. Saat asetukset näkyviin **Settings → Raster Access** -näkymästä:
+The **Raster Access** settings determine the behaviour of GeoServer when image requests arrive. You can view the settings in the **Settings → Raster Access** view:
 
 +-----------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-|                                         | #### **Raster Access -asetukset**                                                                                      |
+|                                         | #### **Raster Access settings** \|                                                                                     |
 +-----------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| **ImageIO cache memory threshold (KB)** | Tätä arvoa suurempia kuvapyyntöjä käsitellään väliaikasta tiedosto-cachea käyttäen, muuten käytetään välimuisti-cachea |
+| **ImageIO cache memory threshold (KB)** | Image requests above this value will be handled using a temporary file cache, otherwise a cache memory will be used \| |
 +-----------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| **CPU Use**                             | Rasterikuvien luomisen aikana käytettävien prosessien asetukset                                                        |
+| **CPU Use**                             | Settings for the processes used during the creation of raster images                                                   |
 +-----------------------------------------+------------------------------------------------------------------------------------------------------------------------+
 
 ![](img/harjoitus_10/image3.png)
 
-**Server Status** -näkymän lopussa on palvelimeen liittyviä asetuksia:
+At the end of the **Server Status** view, you will find settings related to the server:
 
 +-------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                               | #### **Muut palvelimen asetukset**                                                                                                                                        |
+|                               | #### **Other server settings** \|                                                                                                                                         |
 +-------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Update Sequence**           | Kertoo kuinka monta kertaa muutoksia on tehty palvelimen asetuksiin.                                                                                                      |
+| **Update Sequence**           | Tells you how many times changes have been made to the server settings.                                                                                                   |
 +-------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Resource cache**            | GeoServer tallentaa store-yhteydet, ulkopuoliset kuvat sekä kohdetyyppien, fonttien ja koordinaattijärjestelmien määritykset. Tarvittaessa cachen tiedot voidaan poistaa. |
+| **Resource cache**            | GeoServer stores store connections, external images, and the configuration of object types, fonts and coordinate systems. If necessary, the cache data can be deleted. \| |
 +-------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Configuration and catalog** | Kaikki GeoServer-konfiguraation asetukset on ladattu palvelimen muistiin. Tarvittaessa niitä voidaan ladata uudelleen.                                                    |
+| **Configuration and catalog** | All GeoServer configuration settings are loaded into the server memory. If necessary, they can be reloaded. \|                                                            |
 +-------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-## **GeoServerin loki**
+## **GeoServer's log**
 
-Tutustutaan GeoServerin lokin sisältöön ja sen asetuksiin suorittamalla pyyntöjä palvelimeen käyttäen esikatselun toimintoa.
+Explore the contents of the GeoServer log and its settings by making requests to the server using the preview function.
 
-Avaa erilliseen selainikkunaan jonkun tason esikatselu (**Layer Preview**) ja pidä karttaikkuna auki.
+In a separate browser window, open a layer preview (**Layer Preview**) and keep the map window open.
 
-Avaa eri selainikkunaan **Settings → Global** näkymää oikeasta palkista.
+In a different browser window, open **Settings → Global** from the right bar.
 
-Avaa kolmanteen selainikkunaan GeoServerin lokien esikatselu (**GeoServer Logs**).
+In the third browser window, open the GeoServer logs preview (**GeoServer Logs**).
 
 ![](img/harjoitus_10/image4.png)
 
-Tutustu asetuksiin kouluttajan ohjauksella sekä lukemalla lisää tietoa asetuksista Geoserverin manuaalista (**Web Administration Interface → Server → Global Settings**). Avaa manuaali erilliseen selainikkunaan.
+Familiarise yourself with the settings with the guidance of your trainer and by reading more about the settings in the Geoserver manual (**Web Administration Interface → Server → Global Settings**). Open the manual in a separate browser window.
 
-Suorita nyt muutamia toimintoja (zoom in, zoom out, pan) karttaikkunassa. 
+Now perform some operations (zoom in, zoom out, pan) in the map window.
 
-Tarkista tuliko lokeihin mitään: paina **Refresh**, niin uusimmat rivit lokitiedostosta tuleva näkyville. Voit myös vähentää lokirivien määrää (**Maximum console lines**).
+Check if anything was added to the logs: press **Refresh** and the latest lines from the log file will be displayed. You can also reduce the number of log lines (**Maximum console lines**).
 
-GeoServerin asennuksessa on valmiina ladattuja erilaisia loki-profiileja, jotka raportoivat erilaisia tietoja lokiin.
+The GeoServer installation comes pre-loaded with different log profiles that report different information to the log.
 
 ![](img/harjoitus_10/image5.png)
 
-Voit nyt vaihtaa erilaisia lokitus profiileja ja havainnoida toimintojen aiheuttamat vaikutukset lokitiedostoihin. Kokeile asettaa profiiliksi VERBOSE_LOGGING.properties ja liikuttele karttaa. Päivitä tämän jälkeen loki (refresh) ja katso mitä rivejä lokiin on ilmestynyt.
+You can now switch between different logging profiles and observe the effects of actions on log files. Try setting the profile to VERBOSE_LOGGING.properties and drag the map. Then refresh the log and see what lines have appeared in the log.
 
-## **REST API:n toimintaa**
+## **REST API functionality**
 
-GeoServerin palvelimen asetuksia on mahdollista hallita myös REST-rajapinnan kautta.
+It is also possible to manage GeoServer server settings via the REST interface.
 
-Voit tarkistaa REST-rajapinnan kautta saatavilla olevat aineistot kirjoittamalla seuraavan osoitteen web-selaimeen (käytä oman palvelimesi ip-osoitetta):
+You can check the data available through the REST interface by typing the following address in a web browser (use the ip address of your own server):
 
 ::: note-box
-<http://%3Eoma-ip-osoite:8080/geoserver/rest/workspaces/>
+[http://[your-training-instance]/geoserver/rest/workspaces/](http://%3Eoma-ip-osoite:8080/geoserver/rest/workspaces/){.uri}
 :::
 
-Etsi tiedot edellisissä harjoituksissa luoduista karttatasoista.
+Find information on the map layers created in the previous exercises.
 
 ![](img/harjoitus_10/image6.png)
 
 ::: hint-box
-Kuinka toteuttaisit uuden kuvaustekniikan tallentamisen GeoServeriin REST-rajapinnan avulla?
+How would you implement the storage of a new styling technique in GeoServer using a REST interface?
 :::
 
 ::: hint-box
-Psst! Tutustu REST API:n kuvaukseen GeoServerin ohjeessa.
+Psst! See the description of the REST API in the GeoServer Help.
 :::
 
-## **Monitor-lisäosan käyttö**
+## **Using the Monitor plugin (tarkista nämä vielä)**
 
-GeoServerin **Monitor**-lisäosa on valmiiksi asennettu koulutus palvelimiin ja se näkyy päävalikosta alapuolelta.
+GeoServer's **Monitor** plugin is pre-installed on the training servers and can be seen in the main menu below.
 
-Avaa **Monitor → Activity**.
+Open **Monitor → Activity**.
 
-Kokeile esikatsella eri tasoja ja katso sen jälkeen **Monitor → Activity → Daily**-osiosta järjestelmän aktiviteettigrafiikkaa, jonka pitäisi näyttää seuraavanlaiselta: ![](img/harjoitus_10/image7.png) ![](img/harjoitus_10/image8.png)
+Try previewing the different layers and then look in **Monitor → Activity → Daily** at the system activity graph, which should look like this: ![](img/harjoitus_10/image7.png) ![](img/harjoitus_10/image8.png)
