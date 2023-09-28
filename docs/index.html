@@ -7,7 +7,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Johdanto GeoServerin käyttöön" />
+<meta property="og:title" content="Introduction to GeoServer" />
 <meta property="og:type" content="book" />
 
 
@@ -19,9 +19,9 @@
 <meta name="date" content="2023-09-28" />
 
 
-<meta name="description" content="Johdanto GeoServerin käyttöön">
+<meta name="description" content="Introduction to GeoServer">
 
-<title>Johdanto GeoServerin käyttöön</title>
+<title>Introduction to GeoServer</title>
 
 
 
@@ -54,21 +54,21 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 
 <div class="sidebar-title-wrapper">
 <img alt="Logo" width="100" src="img/gispo_white_sm.png" class="sidebar-logo">
-<div class="sidebar-title"><h1>Johdanto GeoServerin käyttöön</h1></div>
-<div class="abstract-sidebar"><p>Johdantokurssi GeoServerin käyttöön.</p></div>
+<div class="sidebar-title"><h1>Introduction to GeoServer</h1></div>
+<div class="abstract-sidebar"><p>A course covering basic GeoServer topics.</p></div>
 </div>
 
 <nav class="sidebar-nav">
 <div id="TOC" class="toc">
 <ul>
-<li class="has-sub"><a href="index.html#johdanto-geoserverin-käyttöön"><span class="toc-section-number">1</span> JOHDANTO GEOSERVERIN KÄYTTÖÖN</a>
+<li class="has-sub"><a href="index.html#introduction-to-geoserver"><span class="toc-section-number">1</span> INTRODUCTION TO GEOSERVER</a>
 <ul>
-<li><a href="index.html#tervetuloa-geoserver-kurssille"><span class="toc-section-number">1.1</span> Tervetuloa GeoServer-kurssille!</a></li>
-<li><a href="index.html#geoserverin-taustaa"><span class="toc-section-number">1.2</span> GeoServerin taustaa</a></li>
-<li><a href="index.html#lukuohje"><span class="toc-section-number">1.3</span> Lukuohje</a></li>
-<li><a href="index.html#mistä-lisätietoja"><span class="toc-section-number">1.4</span> Mistä lisätietoja?</a></li>
-<li><a href="index.html#virheet"><span class="toc-section-number">1.5</span> Virheet</a></li>
-<li><a href="index.html#lisenssi-ja-oikeudet"><span class="toc-section-number">1.6</span> Lisenssi ja oikeudet</a></li>
+<li><a href="index.html#welcome-to-this-geoserver-course"><span class="toc-section-number">1.1</span> Welcome to this GeoServer Course!</a></li>
+<li><a href="index.html#background-of-geoserver"><span class="toc-section-number">1.2</span> Background of GeoServer</a></li>
+<li><a href="index.html#how-to-read"><span class="toc-section-number">1.3</span> How to read</a></li>
+<li><a href="index.html#additional-information"><span class="toc-section-number">1.4</span> Additional information</a></li>
+<li><a href="index.html#mistakes"><span class="toc-section-number">1.5</span> Mistakes</a></li>
+<li><a href="index.html#license-and-permissions"><span class="toc-section-number">1.6</span> License and permissions</a></li>
 </ul></li>
 <li class="has-sub"><a href="2-exercise-1.1-installation-and-commissioning.html#exercise-1.1-installation-and-commissioning"><span class="toc-section-number">2</span> EXERCISE 1.1: INSTALLATION AND COMMISSIONING</a>
 <ul>
@@ -224,7 +224,7 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 <li class="has-sub"><a href="14-exercise-2.6-filtering.html#exercise-2.6-filtering"><span class="toc-section-number">14</span> EXERCISE 2.6: FILTERING</a>
 <ul>
 <li><a href="14-exercise-2.6-filtering.html#valmistautuminen"><span class="toc-section-number">14.1</span> <strong>Valmistautuminen</strong></a></li>
-<li><a href="14-exercise-2.6-filtering.html#ominaisuustietosuodattimet"><span class="toc-section-number">14.2</span> <strong>Ominaisuustietosuodattimet</strong></a></li>
+<li><a href="14-exercise-2.6-filtering.html#filtering-with-attributes"><span class="toc-section-number">14.2</span> Filtering with attributes</a></li>
 </ul></li>
 </ul>
 </div>
@@ -238,58 +238,57 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 <!-- This title section is only rendered to index.html -->
 <div id="title-container">
 
-<h1 id="title-header">Johdanto GeoServerin käyttöön</h1>
+<h1 id="title-header">Introduction to GeoServer</h1>
 
 <h4 class="author">Gispo Oy</h4>
 
 <h4 id="build-date">Version: 2023-09-28</h4>
 
-<div class="abstract"><p>Johdantokurssi GeoServerin käyttöön.</p></div>
+<div class="abstract"><p>A course covering basic GeoServer topics.</p></div>
 
 </div>
-<div id="johdanto-geoserverin-käyttöön" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> JOHDANTO GEOSERVERIN KÄYTTÖÖN</h1>
-<div id="tervetuloa-geoserver-kurssille" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Tervetuloa GeoServer-kurssille!</h2>
-<p>Tämän kurssin tarkoituksena on opastaa sinut GeoServerin käyttöön. Paikkatietojen tai muiden paikkatieto-ohjelmistojen käyttökokemus ei ole välttämätöntä koulutukseen osallistumisel­le. Toki niistä on paljon hyötyä. Kysy rohkeasti opettajalta lisätietoja, jos käytetty terminologia tai joku asia jää epäselväksi.</p>
+<div id="introduction-to-geoserver" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> INTRODUCTION TO GEOSERVER</h1>
+<div id="welcome-to-this-geoserver-course" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Welcome to this GeoServer Course!</h2>
+<p>The purpose of this course is to introduce you into using GeoServer. Exprience with spatial data or other GIS software is not a necessary prerequisite for attending, although it is useful. Don’t hesitate to ask for additional information from the trainer if any of the terminology or topics is left unclear.</p>
 </div>
-<div id="geoserverin-taustaa" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> GeoServerin taustaa</h2>
-<p>GeoServer on avoimen lähdekoodin palvelinohjelmisto, jossa voi jakaa, käsitellä ja hallinnoida geospatiaalista dataa. GeoServer on ollut toiminnassa vuodesta 2001 alkaen “The Open Planning Project”-hankkeen kautta. Vuonna 2014 GeoServer siirtyi OSGeo-projektin alle. GeoServeriä päivitetään puolen vuoden välein ja ohjelmiston käyttäjäkunta on varsin vilkas ja aktiivinen.</p>
+<div id="background-of-geoserver" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Background of GeoServer</h2>
+<p>GeoServer is an open source server software where one can share, process and manage geospatial data. GeoServer has existed since the year 2001 through “The Open Planning Project”. In the year 2014 GeoServer was included under the OSGeo- project. GeoServer is updated every half a year and the userbase is quite active.</p>
 </div>
-<div id="lukuohje" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Lukuohje</h2>
-<p><strong>Web-selaimessa</strong> suoritettavat komennot on merkitty seuraavasti:</p>
+<div id="how-to-read" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> How to read</h2>
+<p>Commands to execute in a <strong>web browser</strong> are displayed as follows:</p>
 <div class="note-box">
 <p><a href="http://localhost:8080/geoserver" class="uri">http://localhost:8080/geoserver</a></p>
 </div>
-<p><strong>Komentorivillä</strong> suoritettavat komennot on merkitty seuraavasti:</p>
+<p>Commands to execute in a <strong>command prompt/terminal</strong> are displayed as follows:</p>
 <div class="commandline-box">
 <p>sudo lsb_release -a</p>
 </div>
-<p><strong>Tiedostojen sisältö</strong> on esitetty seuraavasti:</p>
+<p><strong>File content</strong> is displayed as follows:</p>
 <div class="file-content-box">
 <p>#IPv4 local connections: #host all all 127.0.0.1/32 md5</p>
 </div>
-<p><strong>HTML- ja CSS-koodit, SQL-komennot sekä Python-scriptit</strong> on esitetty seuraavasti:</p>
+<p><strong>HTML and CSS code, SQL- queries and Python-scripts</strong> are displayed as follows:</p>
 <div class="code-box">
 <p>SELECT version();</p>
 </div>
-<p><strong>Kysymykset, lisätiedot ja vihjeet</strong> on esitetty seuraavasti:</p>
+<p><strong>Questions, notes and hints</strong> are displayed as follows:</p>
 <div class="hint-box">
-<p>Mistä löydät tietoa GeoServeristä?</p>
-<p>GeoServerillä on omat kotisivut.</p>
-<p>Psst! Tietoa GeoServeristä löydät internetistä.</p>
+<p>Where do you find information about GeoServer?</p>
+<p>GeoServer has its own website.</p>
 </div>
 </div>
-<div id="mistä-lisätietoja" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Mistä lisätietoja?</h2>
-<p>Ohessa muutamia web-sivustoja, joista saat lisätietoja:</p>
+<div id="additional-information" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Additional information</h2>
+<p>Here are a few helpful websites:</p>
 <div class="note-box">
-<p><a href="http://www.qgis.org/" class="uri">http://www.qgis.org/</a></p>
+<p><a href="https://geoserver.org/" class="uri">https://geoserver.org/</a></p>
 </div>
 <div class="note-box">
-<p><a href="http://docs.qgis.org/" class="uri">http://docs.qgis.org/</a></p>
+<p><a href="https://docs.geoserver.org/" class="uri">https://docs.geoserver.org/</a></p>
 </div>
 <div class="note-box">
 <p><a href="http://gis.stackexchange.com/" class="uri">http://gis.stackexchange.com/</a></p>
@@ -298,13 +297,14 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 <p><a href="http://www.osgeo.fi" class="uri">http://www.osgeo.fi</a></p>
 </div>
 </div>
-<div id="virheet" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> Virheet</h2>
-<p>Jos havaitset materiaalissa virheitä, niin pyydämme ilmoittamaan niistä kouluttajalle tai sähköpostilla <a href="mailto:info@gispo.fi-osoitteeseen" class="email">info@gispo.fi-osoitteeseen</a>.</p>
+<div id="mistakes" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Mistakes</h2>
+<p>If you notice mistakes in these course materials, we ask you to report either directly to the trainer or by email us at <a href="mailto:info@gispo.fi" class="email">info@gispo.fi</a> .</p>
 </div>
-<div id="lisenssi-ja-oikeudet" class="section level2" number="1.6">
-<h2><span class="header-section-number">1.6</span> Lisenssi ja oikeudet</h2>
-<p>Nämä materiaalit on “Johdanto GeoServerin käyttöön”-kurssille kehittänyt Gispo Oy. Materiaalit on lisensoitu seuraavalla lisenssillä: <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a></p>
+<div id="license-and-permissions" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> License and permissions</h2>
+<p>These materials are developed for the “Introduction to GeoServer” course by Gispo Ltd.
+The materials are licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a> license.</p>
 
 </div>
 </div>
@@ -319,7 +319,7 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 <div class="footer-container text-center">
 
 <div class="footer-info">
-<h5 class="footer-title">Johdanto GeoServerin käyttöön</h5>
+<h5 class="footer-title">Introduction to GeoServer</h5>
 <span class="footer-version">v2023-09-28</span>
 <div class="license"><img src="img/by-nd.svg" width="80px" alt="CC-BY-ND"></div>
 </div>

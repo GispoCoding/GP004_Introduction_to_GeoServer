@@ -1,10 +1,10 @@
-johdanto-geoserverin-käyttöön
-tervetuloa-geoserver-kurssille
-geoserverin-taustaa
-lukuohje
-mistä-lisätietoja
-virheet
-lisenssi-ja-oikeudet
+introduction-to-geoserver
+welcome-to-this-geoserver-course
+background-of-geoserver
+how-to-read
+additional-information
+mistakes
+license-and-permissions
 exercise-1.1-installation-and-commissioning
 preparation
 main-menu
@@ -124,4 +124,4 @@ limiting-access-rights-to-the-data
 user-specific-access-rights-for-the-data
 exercise-2.6-filtering
 valmistautuminen
-ominaisuustietosuodattimet
+filtering-with-attributes

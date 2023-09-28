@@ -7,7 +7,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="14 EXERCISE 2.6: FILTERING | Johdanto GeoServerin käyttöön" />
+<meta property="og:title" content="14 EXERCISE 2.6: FILTERING | Introduction to GeoServer" />
 <meta property="og:type" content="book" />
 
 
@@ -19,9 +19,9 @@
 <meta name="date" content="2023-09-28" />
 
 
-<meta name="description" content="14 EXERCISE 2.6: FILTERING | Johdanto GeoServerin käyttöön">
+<meta name="description" content="14 EXERCISE 2.6: FILTERING | Introduction to GeoServer">
 
-<title>14 EXERCISE 2.6: FILTERING | Johdanto GeoServerin käyttöön</title>
+<title>14 EXERCISE 2.6: FILTERING | Introduction to GeoServer</title>
 
 
 
@@ -54,21 +54,21 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 
 <div class="sidebar-title-wrapper">
 <img alt="Logo" width="100" src="img/gispo_white_sm.png" class="sidebar-logo">
-<div class="sidebar-title"><h1>Johdanto GeoServerin käyttöön</h1></div>
-<div class="abstract-sidebar"><p>Johdantokurssi GeoServerin käyttöön.</p></div>
+<div class="sidebar-title"><h1>Introduction to GeoServer</h1></div>
+<div class="abstract-sidebar"><p>A course covering basic GeoServer topics.</p></div>
 </div>
 
 <nav class="sidebar-nav">
 <div id="TOC" class="toc">
 <ul>
-<li class="has-sub"><a href="index.html#johdanto-geoserverin-käyttöön"><span class="toc-section-number">1</span> JOHDANTO GEOSERVERIN KÄYTTÖÖN</a>
+<li class="has-sub"><a href="index.html#introduction-to-geoserver"><span class="toc-section-number">1</span> INTRODUCTION TO GEOSERVER</a>
 <ul>
-<li><a href="index.html#tervetuloa-geoserver-kurssille"><span class="toc-section-number">1.1</span> Tervetuloa GeoServer-kurssille!</a></li>
-<li><a href="index.html#geoserverin-taustaa"><span class="toc-section-number">1.2</span> GeoServerin taustaa</a></li>
-<li><a href="index.html#lukuohje"><span class="toc-section-number">1.3</span> Lukuohje</a></li>
-<li><a href="index.html#mistä-lisätietoja"><span class="toc-section-number">1.4</span> Mistä lisätietoja?</a></li>
-<li><a href="index.html#virheet"><span class="toc-section-number">1.5</span> Virheet</a></li>
-<li><a href="index.html#lisenssi-ja-oikeudet"><span class="toc-section-number">1.6</span> Lisenssi ja oikeudet</a></li>
+<li><a href="index.html#welcome-to-this-geoserver-course"><span class="toc-section-number">1.1</span> Welcome to this GeoServer Course!</a></li>
+<li><a href="index.html#background-of-geoserver"><span class="toc-section-number">1.2</span> Background of GeoServer</a></li>
+<li><a href="index.html#how-to-read"><span class="toc-section-number">1.3</span> How to read</a></li>
+<li><a href="index.html#additional-information"><span class="toc-section-number">1.4</span> Additional information</a></li>
+<li><a href="index.html#mistakes"><span class="toc-section-number">1.5</span> Mistakes</a></li>
+<li><a href="index.html#license-and-permissions"><span class="toc-section-number">1.6</span> License and permissions</a></li>
 </ul></li>
 <li class="has-sub"><a href="2-exercise-1.1-installation-and-commissioning.html#exercise-1.1-installation-and-commissioning"><span class="toc-section-number">2</span> EXERCISE 1.1: INSTALLATION AND COMMISSIONING</a>
 <ul>
@@ -224,7 +224,7 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 <li class="has-sub"><a href="14-exercise-2.6-filtering.html#exercise-2.6-filtering"><span class="toc-section-number">14</span> EXERCISE 2.6: FILTERING</a>
 <ul>
 <li><a href="14-exercise-2.6-filtering.html#valmistautuminen"><span class="toc-section-number">14.1</span> <strong>Valmistautuminen</strong></a></li>
-<li><a href="14-exercise-2.6-filtering.html#ominaisuustietosuodattimet"><span class="toc-section-number">14.2</span> <strong>Ominaisuustietosuodattimet</strong></a></li>
+<li><a href="14-exercise-2.6-filtering.html#filtering-with-attributes"><span class="toc-section-number">14.2</span> Filtering with attributes</a></li>
 </ul></li>
 </ul>
 </div>
@@ -247,33 +247,30 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 <h2><span class="header-section-number">14.1</span> <strong>Valmistautuminen</strong></h2>
 <p>GeoServeriin on asennettu palvelinkone ja siihen voi muodostaa yhteyden.</p>
 </div>
-<div id="ominaisuustietosuodattimet" class="section level2" number="14.2">
-<h2><span class="header-section-number">14.2</span> <strong>Ominaisuustietosuodattimet</strong></h2>
-<p>Avaa <strong>topp:states</strong>-aineisto <strong>Layer Preview</strong> -ikkunaan:</p>
+<div id="filtering-with-attributes" class="section level2" number="14.2">
+<h2><span class="header-section-number">14.2</span> Filtering with attributes</h2>
+<p>Open the <strong>topp:states</strong> data set in the <strong>Layer Preview</strong> window:</p>
 <p><img src="img/harjoitus_13/image1.png" /></p>
-<p>Saat karttaikkunan yläpuolella olevat valikot näkyviin, kun klikkaat kartan vasemmassa ylänurkassa olevaa nappulaa.</p>
-<p>Voit suodattaa kartalla näkyviä kohteita <strong>CQL (Common Query Language)</strong>-kyselylausekkeilla. CQL tukee vertailuoperaattoreita kuten = (yhtä suuri kuin), &lt; (pienempi kuin), &lt;= (pienempi tai yhtä suuri kuin) ja &lt;&gt; (eri kuin). </p>
-<p>Yksinkertaisimmillaan nämä kyselylauseet voivat siis olla esim. muotoa fieldname = 1 (näytä vain kohteet, joilla kenttä = 1) tai value &gt; 0 ( näytä vain kohteet, joilla arvo suurempi kuin 0).</p>
-<p>Kirjoita hakulausekkeet ylös omiin muistiinpanoihin.</p>
+<p>Click the button on the top left to open additional options.</p>
+<p>You can filter the features displayer on the map with CQL queries. CQL supports comparison operators such as = (equal to), &lt; (less than), &lt;= (less than or equal to) and &lt;&gt; (not equal to). At their simplest these queries can be for example <code>fieldname = 1</code> (show only features where the <code>fieldname</code> is equal to 1) or <code>value \&gt; 0</code> (show only features whose <code>value</code> attribute is greater than 0).</p>
 <div class="hint-box">
-<p>Missä osavaltioissa väkiluku on yli 15 miljoonaa asukasta? Psst! Klikkaa ensin osavaltiota ja tarkista väkiluvun sisältävän ominaisuustietokentän nimi.</p>
+<p>In which states the population exceeds 15 million? First click a state and check which attribute field contains the population number.</p>
 </div>
 <div class="hint-box">
-<p>Minkä osavaltioiden väkiluku on yli miljoona, mutta vähemmän kuin kolme miljoonaa? Montako osavaltiota piirtyy kartalle? Psst! Voit käyttää operaattoria “BETWEEN - - AND - -”.</p>
+<p>In which states the population is greater than a million but less than 3 million? How many states are displayed? You can use the operator “BETWEEN - - AND - -”.</p>
 </div>
 <div class="hint-box">
-<p>Minkä osavaltioiden nimet alkavat C-kirjaimella? Psst! Käytä operaattoria “LIKE” ja villikortti-symbolia “%”. Laita osavaltion nimi lainausmerkkien sisään (’ ’).</p>
+<p>Which states’ names begin with the letter C? Use the LIKE operator and the wildcard symbol “%”. Insert the state’s name in single quotes (’ ’).</p>
 </div>
 <div class="hint-box">
-<p>Missä osavaltioissa on enemmän miespuolisia asukkaita?</p>
+<p>Which states have more male residents?</p>
 </div>
 <div class="hint-box">
-<p>Mitkä osavaltiot leikkaavat 100º läntistä pituuspiiriä? Psst! Lauseke on muotoa “BBOX(geometriasarake, xmin, ymin, xmax, ymax)”. Osavaltioiden geometria on kentässä “the_geom”.</p>
+<p>Which states intersect the 100th meridian west (100ºW)? Use this as a basis for the query: “BBOX(geometry_column, xmin, ymin, xmax, ymax)”. The geometry column is named “the_geom”.</p>
 </div>
-<p>GeoServerin dokumentaatiosta löytyy tarkempia kuvauksia (<strong>Tutorials → CQL and ECQL</strong>).</p>
-<p>Suodata <strong>topp:states</strong>-tason WMS-palvelua siten, että ainoastaan ne osavaltiot, joiden työttömyysprosentti on alle 5% näkyvät palvelussa.</p>
-<p>Muodosta topp:states-tasolle kuvaustekniikka, jossa piirretään osavaltioiden keskipisteeseen punainen symboli.</p>
-<p>Yhdistä edelliseen kuvaustekniikkaan osavaltioiden rajat harmaalla värillä.</p>
+<p>You can find more specific tutorials in the GeoServer documentation (<strong>Tutorials → CQL and ECQL</strong>).</p>
+<p>Filter the WMS service of the <strong>topp:states</strong> so that only states with an unemployment rate less than 5% are displayed.</p>
+<p>Add a style to the <strong>topp:states</strong> layer in which a point is displayed at the centroid of the state. Add grey borders for the states to the style.</p>
 
 </div>
 </div>
@@ -288,7 +285,7 @@ type="button" onclick="navToggle()" aria-label="Toggle navigation">
 <div class="footer-container text-center">
 
 <div class="footer-info">
-<h5 class="footer-title">Johdanto GeoServerin käyttöön</h5>
+<h5 class="footer-title">Introduction to GeoServer</h5>
 <span class="footer-version">v2023-09-28</span>
 <div class="license"><img src="img/by-nd.svg" width="80px" alt="CC-BY-ND"></div>
 </div>
