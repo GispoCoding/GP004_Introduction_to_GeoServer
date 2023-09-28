@@ -12,10 +12,6 @@ After the exercise, the student will be able to set up filters based on attribut
 
 25 minutes.
 
-## **Valmistautuminen**
-
-GeoServeriin on asennettu palvelinkone ja siihen voi muodostaa yhteyden.
-
 ## Filtering with attributes
 
 Open the **topp:states** data set in the **Layer Preview** window:
