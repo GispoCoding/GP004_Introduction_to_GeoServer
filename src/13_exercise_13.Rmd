@@ -1,20 +1,20 @@
 # EXERCISE 2.6: FILTERING
 
-**Harjoituksen sisältö**
+**Content of the exercise**
 
-Harjoituksessa tutustutaan CQL- (Common Query Language) ja ECQL-suodattimeen (Extended CQL).
+The exercise will introduce you to CQL (Common Query Language) and ECQL (Extended CQL). 
 
-**Harjoituksen tavoite**
+**Aim of the exercise**
 
-Harjoituksen jälkeen oppilas osaa muodostaa ominaisuus- ja geometriatietoihin perustuvia suodattimia.
+After the exercise, the student will be able to set up filters based on attributes or geometry.
 
-**Arvioitu kesto**
+**Estimated duration**
 
-25 minuuttia.
+25 minutes.
 
 ## **Valmistautuminen**
 
-GeoServeriin on asennettu palvelinkone ja siihen voi muodostaa yhteyden. 
+GeoServeriin on asennettu palvelinkone ja siihen voi muodostaa yhteyden.
 
 ## **Ominaisuustietosuodattimet**
 
