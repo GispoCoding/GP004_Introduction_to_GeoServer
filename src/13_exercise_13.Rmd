@@ -1,4 +1,4 @@
-# HARJOITUS 2.6: SUODATTIMET
+# EXERCISE 2.6: FILTERING
 
 **Harjoituksen sisältö**
 
