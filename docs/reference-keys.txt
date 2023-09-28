@@ -123,5 +123,4 @@ create-a-new-role-and-user
 limiting-access-rights-to-the-data
 user-specific-access-rights-for-the-data
 exercise-2.6-filtering
-valmistautuminen
 filtering-with-attributes
