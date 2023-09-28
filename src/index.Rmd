@@ -1,9 +1,9 @@
 ---
-title: "Johdanto GeoServerin käyttöön"
+title: "Introduction to GeoServer"
 author: "Gispo Oy"
 date: "`r Sys.Date()`"
 site: "bookdown::bookdown_site"
-abstract: "Johdantokurssi GeoServerin käyttöön."
+abstract: "A course covering basic GeoServer topics."
 output:
     bookdown::html_book:
         toc: true
@@ -14,63 +14,60 @@ output:
 documentclass: book
 ---
 
-<!-- Harjoitukset -->
+# INTRODUCTION TO GEOSERVER
 
-# JOHDANTO GEOSERVERIN KÄYTTÖÖN
+## Welcome to this GeoServer Course!
 
-## Tervetuloa GeoServer-kurssille!
-Tämän kurssin tarkoituksena on opastaa sinut GeoServerin käyttöön. Paikkatietojen tai muiden paikkatieto-ohjelmistojen käyttökokemus ei ole välttämätöntä koulutukseen osallistumisel­le. Toki niistä on paljon hyötyä. Kysy rohkeasti opettajalta lisätietoja, jos käytetty terminologia tai joku asia jää epäselväksi.
+The purpose of this course is to introduce you into using GeoServer. Exprience with spatial data or other GIS software is not a necessary prerequisite for attending, although it is useful. Don't hesitate to ask for additional information from the trainer if any of the terminology or topics is left unclear.
 
-## GeoServerin taustaa
-GeoServer on avoimen lähdekoodin palvelinohjelmisto, jossa voi jakaa, käsitellä ja hallinnoida geospatiaalista dataa. GeoServer on ollut toiminnassa vuodesta 2001 alkaen “The Open Planning Project”-hankkeen kautta. Vuonna 2014 GeoServer siirtyi OSGeo-projektin alle. GeoServeriä päivitetään puolen vuoden välein ja ohjelmiston käyttäjäkunta on varsin vilkas ja aktiivinen.
+## Background of GeoServer
 
+GeoServer is an open source server software where one can share, process and manage geospatial data. GeoServer has existed since the year 2001 through "The Open Planning Project". In the year 2014 GeoServer was included under the OSGeo- project. GeoServer is updated every half a year and the userbase is quite active.
 
-## Lukuohje
+## How to read
 
-**Web-selaimessa** suoritettavat komennot on merkitty seuraavasti:
+Commands to execute in a **web browser** are displayed as follows:
 
 ::: note-box
 <http://localhost:8080/geoserver>
 :::
 
-**Komentorivillä** suoritettavat komennot on merkitty seuraavasti:
+Commands to execute in a **command prompt/terminal** are displayed as follows:
 
 ::: commandline-box
 sudo lsb_release -a
 :::
 
-**Tiedostojen sisältö** on esitetty seuraavasti:
+**File content** is displayed as follows:
 
 ::: file-content-box
 #IPv4 local connections: #host all all 127.0.0.1/32 md5
 :::
 
-**HTML- ja CSS-koodit, SQL-komennot sekä Python-scriptit** on esitetty seuraavasti:
+**HTML and CSS code, SQL- queries and Python-scripts** are displayed as follows:
 
 ::: code-box
 SELECT version();
 :::
 
-**Kysymykset, lisätiedot ja vihjeet** on esitetty seuraavasti:
+**Questions, notes and hints** are displayed as follows:
 
 ::: hint-box
-Mistä löydät tietoa GeoServeristä?
+Where do you find information about GeoServer? 
 
-GeoServerillä on omat kotisivut.
-
-Psst! Tietoa GeoServeristä löydät internetistä.
+GeoServer has its own website.
 :::
 
-## Mistä lisätietoja?
+## Additional information
 
-Ohessa muutamia web-sivustoja, joista saat lisätietoja:
+Here are a few helpful websites:
 
 ::: note-box
-<http://www.qgis.org/>
+<https://geoserver.org/>
 :::
 
 ::: note-box
-<http://docs.qgis.org/>
+<https://docs.geoserver.org/>
 :::
 
 ::: note-box
@@ -81,10 +78,12 @@ Ohessa muutamia web-sivustoja, joista saat lisätietoja:
 <http://www.osgeo.fi>
 :::
 
-## Virheet
+## Mistakes
 
-Jos havaitset materiaalissa virheitä, niin pyydämme ilmoittamaan niistä kouluttajalle tai sähköpostilla [info\@gispo.fi-osoitteeseen](mailto:info@gispo.fi-osoitteeseen){.email}.
+If you notice mistakes in these course materials, we ask you to report either directly to the trainer or by email us at info@gispo.fi .
 
-## Lisenssi ja oikeudet
 
-Nämä materiaalit on "Johdanto GeoServerin käyttöön"-kurssille kehittänyt Gispo Oy. Materiaalit on lisensoitu seuraavalla lisenssillä: [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/)
+## License and permissions
+
+These materials are developed for the "Introduction to GeoServer" course by Gispo Ltd.
+The materials are licensed under [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/) license.

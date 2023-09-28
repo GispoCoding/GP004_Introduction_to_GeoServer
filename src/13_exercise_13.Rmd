@@ -16,44 +16,38 @@ After the exercise, the student will be able to set up filters based on attribut
 
 GeoServeriin on asennettu palvelinkone ja siihen voi muodostaa yhteyden.
 
-## **Ominaisuustietosuodattimet**
+## Filtering with attributes
 
-Avaa **topp:states**-aineisto **Layer Preview** -ikkunaan:
+Open the **topp:states** data set in the **Layer Preview** window:
 
 ![](img/harjoitus_13/image1.png)
 
-Saat karttaikkunan yläpuolella olevat valikot näkyviin, kun klikkaat kartan vasemmassa ylänurkassa olevaa nappulaa.
+Click the button on the top left to open additional options.
 
-Voit suodattaa kartalla näkyviä kohteita **CQL (Common Query Language)**-kyselylausekkeilla. CQL tukee vertailuoperaattoreita kuten = (yhtä suuri kuin), \< (pienempi kuin), \<= (pienempi tai yhtä suuri kuin) ja \<\> (eri kuin). 
-
-Yksinkertaisimmillaan nämä kyselylauseet voivat siis olla esim. muotoa fieldname = 1 (näytä vain kohteet, joilla kenttä = 1) tai value \> 0 ( näytä vain kohteet, joilla arvo suurempi kuin 0).
-
-Kirjoita hakulausekkeet ylös omiin muistiinpanoihin.
+You can filter the features displayer on the map with CQL queries. CQL supports comparison operators such as = (equal to), \< (less than), \<= (less than or equal to) and \<\> (not equal to). At their simplest these queries can be for example ```fieldname = 1``` (show only features where the ```fieldname``` is equal to 1) or ```value \> 0``` (show only features whose ```value``` attribute is greater than 0).
 
 ::: hint-box
-Missä osavaltioissa väkiluku on yli 15 miljoonaa asukasta? Psst! Klikkaa ensin osavaltiota ja tarkista väkiluvun sisältävän ominaisuustietokentän nimi.
+In which states the population exceeds 15 million? First click a state and check which attribute field contains the population number.
 :::
 
 ::: hint-box
-Minkä osavaltioiden väkiluku on yli miljoona, mutta vähemmän kuin kolme miljoonaa? Montako osavaltiota piirtyy kartalle? Psst! Voit käyttää operaattoria "BETWEEN - - AND - -".
+In which states the population is greater than a million but less than 3 million? How many states are displayed? You can use the operator "BETWEEN - - AND - - ".
 :::
 
 ::: hint-box
-Minkä osavaltioiden nimet alkavat C-kirjaimella? Psst! Käytä operaattoria "LIKE" ja villikortti-symbolia "%". Laita osavaltion nimi lainausmerkkien sisään (' ').
+Which states' names begin with the letter C? Use the LIKE operator and the wildcard symbol "%". Insert the state's name in single quotes (' ').
 :::
 
 ::: hint-box
-Missä osavaltioissa on enemmän miespuolisia asukkaita?
+Which states have more male residents?
 :::
 
 ::: hint-box
-Mitkä osavaltiot leikkaavat 100º läntistä pituuspiiriä? Psst! Lauseke on muotoa "BBOX(geometriasarake, xmin, ymin, xmax, ymax)". Osavaltioiden geometria on kentässä "the_geom".
+Which states intersect the 100th meridian west (100ºW)? Use this as a basis for the query: "BBOX(geometry_column, xmin, ymin, xmax, ymax)". The geometry column is named "the_geom".
 :::
 
-GeoServerin dokumentaatiosta löytyy tarkempia kuvauksia (**Tutorials → CQL and ECQL**).
+You can find more specific tutorials in the GeoServer documentation (**Tutorials → CQL and ECQL**).
 
-Suodata **topp:states**-tason WMS-palvelua siten, että ainoastaan ne osavaltiot, joiden työttömyysprosentti on alle 5% näkyvät palvelussa.
+Filter the WMS service of the **topp:states** so that only states with an unemployment rate less than 5% are displayed.
 
-Muodosta topp:states-tasolle kuvaustekniikka, jossa piirretään osavaltioiden keskipisteeseen punainen symboli.
-
-Yhdistä edelliseen kuvaustekniikkaan osavaltioiden rajat harmaalla värillä.
+Add a style to the **topp:states** layer in which a point is displayed at the centroid of the state. Add grey borders for the states to the style.
