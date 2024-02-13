@@ -170,6 +170,6 @@ Zoom in on the map and press on a building to see its properties.
 
 ## **Add Helsinki road network**
 
-Now add the OpenStreetMap Helsinki road network to GeoServer in the same way as in the previous exercise. The data can be found in the same folder as the **buildings** data, under the name **roads.shp**.
+Now add the OpenStreetMap Helsinki road network to GeoServer in the same way as in the previous exercise. The data can be found in the same folder as the **buildings** data, under the name **gis.osm_roads_free_1**.
 
 Remember that before you can add a layer to GeoServer, you need to create a store for it. Name the new store **hki_roads** and the layer created from it **roads** so the layer names remain similar. Remember to also check the coordinate system (**EPSG:4326**) and **DBF charset** (**ISO-8859-1**).
