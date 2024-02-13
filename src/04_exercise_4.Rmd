@@ -201,7 +201,7 @@ Set the default style of the roads layer to **roads style** (**Data â†’ Layers â
 
 Press **Save** and preview the layer. Note that when you zoom the map to a scale bigger than 1:32 000, the roads will no longer be visible.
 
-Let's add roads also at a scale of 1:32 000 and larger. This is done by creating a **\<Rule\>** partition with the maximum scale (**\<MaxScaleDenominator\>**) set to **32000**.
+Let's add roads also at a scale of 1:32 000 and larger. This is done by creating a **\<Rule\>** partition with the minimum scale (**\<MaxScaleDenominator\>**) set to **32000**.
 
 To make use of the previous rule partition: copy the whole **\<Rule\>** section. Paste it after **\</Rule\>**.
 

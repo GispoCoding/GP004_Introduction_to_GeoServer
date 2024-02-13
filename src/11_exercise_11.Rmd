@@ -41,7 +41,7 @@ The **Style Editor** box now contains text like the following:
 }\
 :::
 
-Press **Submit**. From the **Styles** menu, open the style you just created and select the **Layer Preview** tab. Select a road layer as the layer to preview.
+Press **Save**. From the **Styles** menu, open the style you just created and select the **Layer Preview** tab. Select a road layer as the layer to preview.
 
 Zoom in on the map so that the roads start to show up properly.
 
@@ -122,7 +122,7 @@ z-index: 0, 3;
 
 Note that in this way you define overlapping styles for the main paths, which form more complex visualisations.
 
-Press **Submit** and visualize the result: ![](img/harjoitus_11/image5.2.png)
+Press **Save** and visualize the result: ![](img/harjoitus_11/image5.2.png)
 
 The **Z-index** command defines the order in which the different styles are drawn. An index value of 0 refers to a black line with a thickness of five pixels. An index value of three refers to a yellow line with a thickness of three pixels. Note how the lower values of the Z-index are drawn first and the higher values are drawn later.
 
