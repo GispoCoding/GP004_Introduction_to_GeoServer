@@ -22,6 +22,9 @@ Until now, the interface has only displayed the functionalities and resources op
 
 Now log in to the server using **admin** as ID and **gispo** as password.
 
+::: hint-box
+Psst! The default password for GeoServer is 'geoserver', but for training purposes this has been changed for security reasons.
+:::
 
 The administrator's view is similar to the interface we just saw. The structure is the same but there is much more functionality and information available.
 
