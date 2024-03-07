@@ -32,7 +32,6 @@ Check again which Java settings are in use on the server for image processing. B
 
 You can edit the JAI (Java Advanced Imaging) settings via **Settings → Image Processing** view. ![](img/harjoitus_10/image2.png)
 
-PUT A TABLE HERE FROM DOCS (?)
 
 Changes to the settings are visible in the **Server Status** page.
 
@@ -112,7 +111,7 @@ Psst! See the description of the REST API in the GeoServer Help.
 
 ## **Using the Monitor plugin (tarkista nämä vielä)**
 
-GeoServer's **Monitor** plugin is pre-installed on the training servers and can be seen in the main menu below.
+GeoServer's **Monitor** plugin is pre-installed on the training servers and can be seen in the main menu below. This plugin allows you to view GeoServer traffic. Feel free to view what can be done with the Monitor plugin. Also consider how it could be useful in your organization. 
 
 Open **Monitor → Activity**.
 

@@ -72,7 +72,7 @@ Then use **Browse\...** to select the GeoServer logo (**/training/GeoServer_100.
 
 Set the transparency to **30** and the position to **Bottom right**.
 
-Now press **Submit** to save the changes to the WMS service. All maps received via the WMS service map should now contain a watermark.
+Now press **Apply** to save the changes to the WMS service. All maps received via the WMS service map should now contain a watermark.
 
 Open **Data → Layer Preview**, and preview some layers. Check that the watermark appears in all WMS requests.
 
